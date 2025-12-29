@@ -42,13 +42,13 @@ module.exports = {
             if (!conditions.hasActivePlayer) {
                 const embed = new EmbedBuilder().setDescription('❌ No music is currently playing!');
                 return interaction.editReply({ embeds: [embed] })
-                    .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                    ;
             }
 
             if (!conditions.sameVoiceChannel) {
                 const embed = new EmbedBuilder().setDescription('❌ You need to be in the same voice channel as the bot!');
                 return interaction.editReply({ embeds: [embed] })
-                    .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                    ;
             }
 
             const volume = interaction.options.getInteger('level');
@@ -57,13 +57,13 @@ module.exports = {
 
             const embed = new EmbedBuilder().setDescription(`🔊 Volume set to **${volume}%**`);
             return interaction.editReply({ embeds: [embed] })
-                .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                ;
 
         } catch (error) {
             console.error('Volume command error:', error);
             const embed = new EmbedBuilder().setDescription('❌ An error occurred while setting volume!');
             return interaction.editReply({ embeds: [embed] })
-                .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                ;
         }
     }
 };

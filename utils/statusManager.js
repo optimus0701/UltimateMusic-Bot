@@ -296,12 +296,12 @@ class StatusManager {
         if (!this.isPlaying) {
             await this.client.user.setPresence({
                 activities: [{
-                    name: `🎸 Music in ${serverCount} servers`,
+                    name: `Youtube Music`,
                     type: ActivityType.Playing
                 }],
                 status: 'online'
             });
-            //console.log(`✅ Server count status set: ${serverCount} servers`);
+            //console.log(`✅ Status set: Playing Youtube Music`);
         }
     }
 

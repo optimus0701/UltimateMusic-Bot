@@ -41,7 +41,7 @@ module.exports = {
             if (!conditions.hasActivePlayer) {
                 const embed = new EmbedBuilder().setDescription('❌ No music is currently playing!');
                 return interaction.editReply({ embeds: [embed] })
-                    .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                    ;
             }
 
             const player = conditions.player;
@@ -51,7 +51,7 @@ module.exports = {
             if (!currentTrack && queue.size === 0) {
                 const embed = new EmbedBuilder().setDescription('📜 Queue is empty!');
                 return interaction.editReply({ embeds: [embed] })
-                    .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                    ;
             }
 
             const page = interaction.options.getInteger('page') || 1;
@@ -87,13 +87,13 @@ module.exports = {
 
             const embed = new EmbedBuilder().setDescription(description);
             return interaction.editReply({ embeds: [embed] })
-                .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 10000));
+                ;
 
         } catch (error) {
             console.error('Queue command error:', error);
             const embed = new EmbedBuilder().setDescription('❌ An error occurred while fetching the queue!');
             return interaction.editReply({ embeds: [embed] })
-                .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                ;
         }
     }
 };

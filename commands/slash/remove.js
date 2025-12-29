@@ -39,14 +39,14 @@ module.exports = {
             if (!conditions.hasActivePlayer || conditions.queueLength === 0) {
                 const embed = new EmbedBuilder().setDescription('❌ Queue is empty!');
                 return interaction.editReply({ embeds: [embed] })
-                    .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                    ;
             }
 
             const position = interaction.options.getInteger('position');
             if (position > conditions.queueLength) {
                 const embed = new EmbedBuilder().setDescription(`❌ Invalid position! Queue has only ${conditions.queueLength} songs.`);
                 return interaction.editReply({ embeds: [embed] })
-                    .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                    ;
             }
 
             const player = conditions.player;
@@ -54,13 +54,13 @@ module.exports = {
 
             const embed = new EmbedBuilder().setDescription(`🗑️ Removed: **${removedTrack.info.title}**`);
             return interaction.editReply({ embeds: [embed] })
-                .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                ;
 
         } catch (error) {
             console.error('Remove command error:', error);
             const embed = new EmbedBuilder().setDescription('❌ An error occurred while removing the song!');
             return interaction.editReply({ embeds: [embed] })
-                .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                ;
         }
     }
 };

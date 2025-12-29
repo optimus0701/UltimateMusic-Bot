@@ -36,7 +36,7 @@ module.exports = {
             if (errorMsg) {
                 const embed = new EmbedBuilder().setDescription(errorMsg);
                 return interaction.editReply({ embeds: [embed] })
-                    .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                    ;
             }
 
             const player = conditions.player;
@@ -46,13 +46,13 @@ module.exports = {
 
             const embed = new EmbedBuilder().setDescription(`⏭️ Skipped: **${currentTrack}**`);
             return interaction.editReply({ embeds: [embed] })
-                .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                ;
 
         } catch (error) {
             console.error('Skip command error:', error);
             const embed = new EmbedBuilder().setDescription('❌ An error occurred while skipping the song!');
             return interaction.editReply({ embeds: [embed] })
-                .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                ;
         }
     }
 };

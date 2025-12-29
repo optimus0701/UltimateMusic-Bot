@@ -44,8 +44,7 @@ module.exports = {
             const errorMsg = checker.getErrorMessage(conditions, 'play');
             if (errorMsg) {
                 const embed = new EmbedBuilder().setDescription(errorMsg);
-                return interaction.editReply({ embeds: [embed] })
-                    .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                return interaction.editReply({ embeds: [embed] });
             }
 
             const playerHandler = new PlayerHandler(client);
@@ -59,24 +58,20 @@ module.exports = {
 
             if (result.type === 'track') {
                 const embed = new EmbedBuilder().setDescription(`✅ Added to queue: **${result.track.info.title}**`);
-                return interaction.editReply({ embeds: [embed] })
-                    .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                return interaction.editReply({ embeds: [embed] });
             } else if (result.type === 'playlist') {
                 const embed = new EmbedBuilder().setDescription(`✅ Added **${result.tracks}** songs from playlist: **${result.name}**`);
-                return interaction.editReply({ embeds: [embed] })
-                    .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                return interaction.editReply({ embeds: [embed] });
             } else {
                 const embed = new EmbedBuilder().setDescription('❌ No results found for your query!');
-                return interaction.editReply({ embeds: [embed] })
-                    .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                return interaction.editReply({ embeds: [embed] });
             }
 
         } catch (error) {
             console.error('Play slash command error:', error);
             ErrorHandler.handle(error, 'play slash command');
             const embed = new EmbedBuilder().setDescription('❌ An error occurred while trying to play music!');
-            return interaction.editReply({ embeds: [embed] })
-                .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+            return interaction.editReply({ embeds: [embed] });
         }
     }
 };

@@ -35,13 +35,13 @@ module.exports = {
             if (!conditions.hasActivePlayer) {
                 const embed = new EmbedBuilder().setDescription('❌ No music is currently playing!');
                 return interaction.editReply({ embeds: [embed] })
-                    .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                    ;
             }
 
             if (!conditions.isPaused) {
                 const embed = new EmbedBuilder().setDescription('❌ Music is not paused!');
                 return interaction.editReply({ embeds: [embed] })
-                    .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                    ;
             }
 
             const player = conditions.player;
@@ -49,13 +49,13 @@ module.exports = {
 
             const embed = new EmbedBuilder().setDescription('▶️ Music resumed!');
             return interaction.editReply({ embeds: [embed] })
-                .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                ;
                 
         } catch (error) {
             console.error('Resume command error:', error);
             const embed = new EmbedBuilder().setDescription('❌ An error occurred while resuming music!');
             return interaction.editReply({ embeds: [embed] })
-                .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                ;
         }
     }
 };

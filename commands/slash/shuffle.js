@@ -35,13 +35,13 @@ module.exports = {
             if (!conditions.hasActivePlayer || conditions.queueLength === 0) {
                 const embed = new EmbedBuilder().setDescription('❌ Queue is empty, nothing to shuffle!');
                 return interaction.editReply({ embeds: [embed] })
-                    .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                    ;
             }
 
             if (!conditions.sameVoiceChannel) {
                 const embed = new EmbedBuilder().setDescription('❌ You need to be in the same voice channel as the bot!');
                 return interaction.editReply({ embeds: [embed] })
-                    .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                    ;
             }
 
             const player = conditions.player;
@@ -49,13 +49,13 @@ module.exports = {
 
             const embed = new EmbedBuilder().setDescription(`🔀 Shuffled **${conditions.queueLength}** songs in queue!`);
             return interaction.editReply({ embeds: [embed] })
-                .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                ;
 
         } catch (error) {
             console.error('Shuffle command error:', error);
             const embed = new EmbedBuilder().setDescription('❌ An error occurred while shuffling the queue!');
             return interaction.editReply({ embeds: [embed] })
-                .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                ;
         }
     }
 };

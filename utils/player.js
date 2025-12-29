@@ -1,9 +1,11 @@
 const CentralEmbedHandler = require('./centralEmbed');
+const NowPlayingDisplay = require('./nowPlayingDisplay');
 
 class PlayerHandler {
     constructor(client) {
         this.client = client;
         this.centralEmbed = new CentralEmbedHandler(client);
+        this.nowPlayingDisplay = new NowPlayingDisplay(client);
     }
 
     async createPlayer(guildId, voiceChannelId, textChannelId, options = {}) {
@@ -177,6 +179,9 @@ class PlayerHandler {
                         loop: player.loop || 'none',
                         queueLength: player.queue.size || 0
                     });
+
+                    // Send beautiful Now Playing embed
+                    await this.nowPlayingDisplay.sendNowPlaying(player, track, thumbnail);
                 }
             } catch (error) {
                 console.error('Track start error:', error.message);

@@ -42,7 +42,7 @@ module.exports = {
             if (!canUse) {
                 const embed = new EmbedBuilder().setDescription('❌ You need DJ permissions to change autoplay settings!');
                 return interaction.editReply({ embeds: [embed] })
-                    .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                    ;
             }
 
             const enabled = interaction.options.getBoolean('enabled');
@@ -58,13 +58,13 @@ module.exports = {
 
             const embed = new EmbedBuilder().setDescription(`🎲 Autoplay **${enabled ? 'enabled' : 'disabled'}**`);
             return interaction.editReply({ embeds: [embed] })
-                .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                ;
 
         } catch (error) {
             console.error('Autoplay command error:', error);
             const embed = new EmbedBuilder().setDescription('❌ An error occurred while toggling autoplay!');
             return interaction.editReply({ embeds: [embed] })
-                .then(() => setTimeout(() => interaction.deleteReply().catch(() => {}), 3000));
+                ;
         }
     }
 };
