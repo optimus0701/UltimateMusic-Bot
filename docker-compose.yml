@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  discord-bot:
+    build: .
+    container_name: ultimatemusic-bot
+    restart: unless-stopped
+
+    # Mount file .env để cấu hình
+    env_file:
+      - .env
+
+    # Hoặc set trực tiếp environment variables
+    # environment:
+    #   - DISCORD_TOKEN=your_token_here
+    #   - MONGODB_URI=your_mongodb_uri
+
+    # Mount volume cho database (nếu dùng local storage)
+    volumes:
+      - ./database:/app/database
+
+    # Port cho web dashboard (nếu có)
+    ports:
+      - "3000:3000"
+
+    # Network mode (sử dụng bridge mặc định)
+    networks:
+      - bot-network
+
+networks:
+  bot-network:
+    driver: bridge

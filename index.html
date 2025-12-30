@@ -341,14 +341,35 @@
     </div>
 
     <script>
-        // Simulated stats - In production, fetch from API
-        document.getElementById('serverCount').textContent = '1';
-        document.getElementById('userCount').textContent = '100+';
+        // Store bot start time from API
+        let botStartTime = Date.now(); // Default fallback
 
-        // Update uptime
-        let startTime = Date.now();
+        // Fetch bot stats from API
+        async function fetchBotStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+
+                if (data.success && data.data) {
+                    // Update bot start time for accurate uptime calculation
+                    botStartTime = data.data.botStartTime;
+
+                    // Update server and user counts
+                    document.getElementById('serverCount').textContent = data.data.servers || '0';
+                    document.getElementById('userCount').textContent = data.data.users.toLocaleString() || '0';
+
+                    // Update uptime immediately
+                    updateUptime();
+                }
+            } catch (error) {
+                console.error('Failed to fetch bot stats:', error);
+                // Keep using fallback values on error
+            }
+        }
+
+        // Update uptime display
         function updateUptime() {
-            const elapsed = Date.now() - startTime;
+            const elapsed = Date.now() - botStartTime;
             const hours = Math.floor(elapsed / 3600000);
             const minutes = Math.floor((elapsed % 3600000) / 60000);
             const seconds = Math.floor((elapsed % 60000) / 1000);
@@ -357,8 +378,14 @@
                 `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
 
+        // Initialize on page load
+        fetchBotStats();
+
+        // Update uptime every second
         setInterval(updateUptime, 1000);
-        updateUptime();
+
+        // Refresh stats from API every 30 seconds
+        setInterval(fetchBotStats, 30000);
     </script>
 </body>
 

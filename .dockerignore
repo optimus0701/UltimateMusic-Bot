@@ -1,0 +1,44 @@
+# Dependencies
+node_modules
+npm-debug.log
+# package-lock.json <- KHÔNG loại bỏ, npm ci cần file này!
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Environment variables (sẽ được mount riêng hoặc dùng Docker secrets)
+.env
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation
+README.md
+LICENSE
+NOTICE.md
+
+# Scripts
+*.py
+
+# Database files (nếu không muốn copy vào image)
+database/*.db
+database/*.sqlite
+
+# Logs
+logs
+*.log
+
+# Temporary files
+tmp
+temp
+*.tmp
