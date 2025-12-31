@@ -22,35 +22,37 @@ class EnterpriseConfigurationManager {
                 token: EnvironmentVariableProcessor.TOKEN || ""
             },
             mongodb: {
-                uri: EnvironmentVariableProcessor.MONGODB_URI || ""  
+                uri: EnvironmentVariableProcessor.MONGODB_URI || ""
             },
-            
+
             /**
              * 🎵 LAVALINK AUDIO SERVER CONFIGURATION
              * Configure your Lavalink server for audio processing
              */
             lavalink: {
-                host: EnvironmentVariableProcessor.LAVALINK_HOST || "de-01.strixnodes.com", 
-                port: EnvironmentVariableProcessor.LAVALINK_PORT || 2010,       
-                password: EnvironmentVariableProcessor.LAVALINK_PASSWORD || "glace", 
+                host: EnvironmentVariableProcessor.LAVALINK_HOST || "de-01.strixnodes.com",
+                port: EnvironmentVariableProcessor.LAVALINK_PORT || 2010,
+                password: EnvironmentVariableProcessor.LAVALINK_PASSWORD || "glace",
                 secure: EnvironmentVariableProcessor.LAVALINK_SECURE === 'true' || false
-            },           
+            },
             /**
              * 🤖 BOT BEHAVIOR CONFIGURATION
              * Customize your bot's appearance and basic behavior
              */
             bot: {
                 prefix: EnvironmentVariableProcessor.BOT_PREFIX || "!",  // 👈 prefix (!, ?, etc)
-                ownerIds: ["1004206704994566164"],      // 👈 ADD YOUR DISCORD ID HERE
+                ownerIds: EnvironmentVariableProcessor.OWNER_IDS
+                    ? EnvironmentVariableProcessor.OWNER_IDS.split(',').map(id => id.trim())
+                    : ["764342088363016233"],      // 👈 ADD YOUR DISCORD ID HERE or use OWNER_IDS in .env
                 embedColor: 0x00AE86,               // 👈 Bot embed color (hex)
                 supportServer: "https://discord.gg/xQF9f9yUEM",    // 👈 Your support server link
                 defaultStatus: "🎵 Ready for music!"         // 👈 Bot status message
             },
-            
+
             features: this.constructAdvancedFeatureConfiguration()
         };
     }
-    
+
     constructAdvancedFeatureConfiguration() {
         return {
             autoplay: true,           // 👈 Auto-play related songs when queue ends

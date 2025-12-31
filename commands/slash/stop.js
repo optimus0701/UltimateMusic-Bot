@@ -14,7 +14,7 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setDescription('❌ System core offline - Command unavailable')
                 .setColor('#FF0000');
-            return interaction.reply({ embeds: [embed], ephemeral: true }).catch(() => {});
+            return interaction.reply({ embeds: [embed], ephemeral: true }).catch(() => { });
         }
 
         interaction.shivaValidated = true;
@@ -23,12 +23,25 @@ module.exports = {
         await interaction.deferReply();
 
         const ConditionChecker = require('../../utils/checks');
+        const { hasDJPermission } = require('../../utils/djMiddleware');
+        const DJPermission = require('../../models/DJPermission');
         const checker = new ConditionChecker(client);
 
         try {
+            // Check DJ permissions
+            const djPermissions = await DJPermission.findOne({ guildId: interaction.guild.id });
+            const hasPermission = await hasDJPermission(interaction, djPermissions);
+
+            if (!hasPermission) {
+                const embed = new EmbedBuilder()
+                    .setDescription('❌ You need DJ permissions to use this command')
+                    .setColor('#FF0000');
+                return interaction.editReply({ embeds: [embed] });
+            }
+
             const conditions = await checker.checkMusicConditions(
-                interaction.guild.id, 
-                interaction.user.id, 
+                interaction.guild.id,
+                interaction.user.id,
                 interaction.member.voice?.channelId
             );
 
