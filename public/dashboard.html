@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Music Bot - Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="brand">
+                <i class="fas fa-music"></i> Ultimate Music Bot
+            </div>
+            <nav class="nav-links">
+                <a href="/dashboard" class="nav-btn active"><i class="fas fa-chart-line"></i> Dashboard</a>
+                <a href="/player" class="nav-btn"><i class="fas fa-headphones"></i> Player</a>
+            </nav>
+            <div id="authSection">
+                <!-- Auth Content Injected Here -->
+            </div>
+        </header>
+
+        <main>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-server"></i></div>
+                    <div class="stat-info">
+                        <h3 id="serverCount">-</h3>
+                        <p>Active Guilds</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-info">
+                        <h3 id="userCount">-</h3>
+                        <p>Total Users</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                    <div class="stat-info">
+                        <h3 id="uptime">--:--:--</h3>
+                        <p>Uptime</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/dashboard.js"></script>
+</body>
+
+</html>

@@ -6,7 +6,7 @@ module.exports = {
     async execute(interaction, client) {
         if (interaction.isChatInputCommand()) {
             const command = client.slashCommands.get(interaction.commandName);
-            
+
             if (!command) {
                 return interaction.reply({
                     content: 'This command is not available!',
@@ -18,84 +18,101 @@ module.exports = {
                 const embed = new EmbedBuilder()
                     .setDescription('❌ System core offline - Commands unavailable')
                     .setColor('#FF0000');
-                return interaction.reply({ embeds: [embed], ephemeral: true }).catch(() => {});
+                return interaction.reply({ embeds: [embed], ephemeral: true }).catch(() => { });
             }
 
             if (!command.securityToken || command.securityToken !== shiva.SECURITY_TOKEN) {
-                
+
                 const securityEmbed = new EmbedBuilder()
                     .setDescription('❌ Command blocked - Security validation required')
                     .setColor('#FF6600');
-                
-                return interaction.reply({ embeds: [securityEmbed], ephemeral: true }).catch(() => {});
+
+                return interaction.reply({ embeds: [securityEmbed], ephemeral: true }).catch(() => { });
             }
 
             try {
                 await command.execute(interaction, client);
 
                 if (!interaction.shivaValidated || !interaction.securityToken || interaction.securityToken !== shiva.SECURITY_TOKEN) {
-                  
+
                     const warningEmbed = new EmbedBuilder()
                         .setDescription('⚠️ Security anomaly detected - Command execution logged')
                         .setColor('#FF6600');
-                    
+
                     if (!interaction.replied && !interaction.deferred) {
-                        await interaction.reply({ embeds: [warningEmbed], ephemeral: true }).catch(() => {});
+                        await interaction.reply({ embeds: [warningEmbed], ephemeral: true }).catch(() => { });
                     }
                     return;
                 }
 
-              
+
 
             } catch (error) {
                 console.error('Error executing slash command:', error);
-                
+                console.log('Interaction state - replied:', interaction.replied, 'deferred:', interaction.deferred);
+
                 if (error.message.includes('shiva') || error.message.includes('validateCore')) {
                     const securityEmbed = new EmbedBuilder()
                         .setDescription('❌ System security modules offline - Commands unavailable')
                         .setColor('#FF0000');
-                    
+
                     const reply = { embeds: [securityEmbed], ephemeral: true };
-                    
+
                     if (interaction.replied || interaction.deferred) {
-                        await interaction.followUp(reply).catch(() => {});
+                        console.log('Sending followUp for shiva error');
+                        await interaction.followUp(reply).catch(() => { });
                     } else {
-                        await interaction.reply(reply).catch(() => {});
+                        console.log('Sending reply for shiva error');
+                        await interaction.reply(reply).catch(() => { });
                     }
                     return;
                 }
-                
+
                 const reply = {
                     content: 'There was an error executing this command!',
                     ephemeral: true
                 };
-                
+
                 if (interaction.replied || interaction.deferred) {
-                    await interaction.followUp(reply);
+                    console.log('Sending followUp for general error');
+                    await interaction.followUp(reply).catch((err) => {
+                        console.error('FollowUp failed:', err.message);
+                    });
                 } else {
-                    await interaction.reply(reply);
+                    console.log('Sending reply for general error');
+                    await interaction.reply(reply).catch((err) => {
+                        console.error('Reply failed:', err.message);
+                    });
                 }
             }
         }
-        
+
         else if (interaction.isButton()) {
+            if (interaction.customId === 'add_to_playlist') {
+                await handleAddToPlaylist(interaction, client);
+                return;
+            }
             await handleSecureMusicButton(interaction, client);
+        } else if (interaction.isStringSelectMenu()) {
+            if (interaction.customId === 'select_playlist_add') {
+                await handlePlaylistSelection(interaction, client);
+            }
         }
     }
 };
 
 async function handleSecureMusicButton(interaction, client) {
     if (interaction.customId === 'music_support') return;
-    
+
     const ConditionChecker = require('../utils/checks');
     const checker = new ConditionChecker(client);
-    
+
     try {
         const conditions = await checker.checkMusicConditions(
             interaction.guild.id,
             interaction.user.id,
             interaction.member.voice?.channelId,
-            true 
+            true
         );
 
         if (!conditions.hasActivePlayer) {
@@ -134,7 +151,7 @@ async function handleSecureMusicButton(interaction, client) {
         const action = interaction.customId.replace('music_', '');
         const CentralEmbedHandler = require('../utils/centralEmbed');
         const centralHandler = new CentralEmbedHandler(client);
-        
+
         switch (action) {
             case 'pause':
                 player.pause(true);
@@ -144,7 +161,7 @@ async function handleSecureMusicButton(interaction, client) {
                 });
                 await updateCentralEmbed();
                 break;
-                
+
             case 'resume':
                 player.pause(false);
                 await interaction.reply({
@@ -153,7 +170,7 @@ async function handleSecureMusicButton(interaction, client) {
                 });
                 await updateCentralEmbed();
                 break;
-                
+
             case 'skip':
                 const currentTrack = player.current?.info?.title || 'Unknown';
                 player.stop();
@@ -162,7 +179,7 @@ async function handleSecureMusicButton(interaction, client) {
                     ephemeral: true
                 });
                 break;
-                
+
             case 'stop':
                 player.destroy();
                 await interaction.reply({
@@ -170,7 +187,7 @@ async function handleSecureMusicButton(interaction, client) {
                     ephemeral: true
                 });
                 break;
-                
+
             case 'clear':
                 const clearedCount = player.queue.size;
                 player.queue.clear();
@@ -180,18 +197,18 @@ async function handleSecureMusicButton(interaction, client) {
                 });
                 await updateCentralEmbed();
                 break;
-                
+
             case 'loop':
                 const currentLoop = player.loop || 'none';
                 let newLoop;
-                
+
                 switch (currentLoop) {
                     case 'none': newLoop = 'track'; break;
                     case 'track': newLoop = 'queue'; break;
                     case 'queue': newLoop = 'none'; break;
                     default: newLoop = 'track';
                 }
-                
+
                 player.setLoop(newLoop);
                 const loopEmojis = { none: '➡️', track: '🔂', queue: '🔁' };
                 await interaction.reply({
@@ -200,7 +217,7 @@ async function handleSecureMusicButton(interaction, client) {
                 });
                 await updateCentralEmbed();
                 break;
-                
+
             case 'volume_up':
                 const newVolumeUp = Math.min(player.volume + 10, 100);
                 player.setVolume(newVolumeUp);
@@ -210,7 +227,7 @@ async function handleSecureMusicButton(interaction, client) {
                 });
                 await updateCentralEmbed();
                 break;
-                
+
             case 'volume_down':
                 const newVolumeDown = Math.max(player.volume - 10, 1);
                 player.setVolume(newVolumeDown);
@@ -220,7 +237,7 @@ async function handleSecureMusicButton(interaction, client) {
                 });
                 await updateCentralEmbed();
                 break;
-                
+
             case 'queue':
                 if (player.queue.size === 0) {
                     return interaction.reply({
@@ -228,19 +245,19 @@ async function handleSecureMusicButton(interaction, client) {
                         ephemeral: true
                     });
                 }
-                
-                const queueList = player.queue.map((track, index) => 
+
+                const queueList = player.queue.map((track, index) =>
                     `\`${index + 1}.\` ${track.info.title.substring(0, 40)}${track.info.title.length > 40 ? '...' : ''}`
                 ).slice(0, 10).join('\n');
-                
+
                 const moreText = player.queue.size > 10 ? `\n... and ${player.queue.size - 10} more songs` : '';
-                
+
                 await interaction.reply({
                     content: `📜 **Queue (${player.queue.size} songs)**\n${queueList}${moreText}`,
                     ephemeral: true
                 });
                 break;
-                
+
             case 'shuffle':
                 if (player.queue.size === 0) {
                     return interaction.reply({
@@ -248,14 +265,14 @@ async function handleSecureMusicButton(interaction, client) {
                         ephemeral: true
                     });
                 }
-                
+
                 player.queue.shuffle();
                 await interaction.reply({
                     content: `🔀 Shuffled ${player.queue.size} songs in queue`,
                     ephemeral: true
                 });
                 break;
-                
+
             default:
                 await interaction.reply({
                     content: '❌ Unknown button action',
@@ -286,6 +303,83 @@ async function handleSecureMusicButton(interaction, client) {
         await interaction.reply({
             content: '❌ An error occurred while processing your request',
             ephemeral: true
-        }).catch(() => {});
+        }).catch(() => { });
+    }
+}
+
+async function handleAddToPlaylist(interaction, client) {
+    const PlaylistManager = require('../utils/playlistManager');
+    const playlistManager = new PlaylistManager();
+    const playlists = await playlistManager.getUserPlaylists(interaction.user.id, interaction.guild.id);
+
+    if (!playlists || playlists.length === 0) {
+        return interaction.reply({
+            content: '❌ You don\'t have any playlists! Create one first using `/playlist create`.',
+            ephemeral: true
+        });
+    }
+
+    const { StringSelectMenuBuilder, ActionRowBuilder } = require('discord.js');
+    const select = new StringSelectMenuBuilder()
+        .setCustomId('select_playlist_add')
+        .setPlaceholder('Select a playlist to add this song to')
+        .addOptions(
+            playlists.map(p => ({
+                label: p.name,
+                description: `${p.songs.length} songs`,
+                value: p.name
+            }))
+        );
+
+    const row = new ActionRowBuilder().addComponents(select);
+
+    await interaction.reply({
+        content: 'Choose a playlist to add the current song to:',
+        components: [row],
+        ephemeral: true
+    });
+}
+
+async function handlePlaylistSelection(interaction, client) {
+    const playlistName = interaction.values[0];
+    const player = client.riffy.players.get(interaction.guild.id);
+
+    if (!player || !player.current) {
+        return interaction.reply({
+            content: '❌ No song is currently playing!',
+            ephemeral: true
+        });
+    }
+
+    try {
+        const PlaylistManager = require('../utils/playlistManager');
+        const playlistManager = new PlaylistManager();
+
+        const songData = {
+            title: player.current.info.title,
+            author: player.current.info.author,
+            url: player.current.info.uri,
+            duration: player.current.info.length
+        };
+
+        await playlistManager.addSong(
+            interaction.user.id,
+            interaction.guild.id,
+            playlistName,
+            songData
+        );
+
+        await interaction.update({
+            content: `✅ Added **${songData.title}** to playlist **${playlistName}**!`,
+            components: []
+        });
+
+    } catch (error) {
+        console.error('Error adding song to playlist:', error);
+        if (interaction.replied || interaction.deferred) {
+            await interaction.followUp({ content: `❌ Failed to add song: ${error.message}`, ephemeral: true }).catch(() => { });
+        } else {
+            await interaction.reply({ content: `❌ Failed to add song: ${error.message}`, ephemeral: true }).catch(() => { });
+        }
     }
 }

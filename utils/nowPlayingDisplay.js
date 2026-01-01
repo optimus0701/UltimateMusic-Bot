@@ -13,7 +13,7 @@ class NowPlayingDisplay {
         const seconds = Math.floor(ms / 1000);
         const minutes = Math.floor(seconds / 60);
         const hours = Math.floor(minutes / 60);
-        
+
         if (hours > 0) {
             return `${hours}:${String(minutes % 60).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
         }
@@ -59,7 +59,7 @@ class NowPlayingDisplay {
         // Beautiful gradient color
         const embed = new EmbedBuilder()
             .setColor('#9B59B6') // Purple gradient
-            .setAuthor({ 
+            .setAuthor({
                 name: '♫ Now Playing',
                 iconURL: this.client.user.displayAvatarURL()
             })
@@ -108,8 +108,8 @@ class NowPlayingDisplay {
         // Next track preview
         if (player.queue.size > 0) {
             const nextTrack = player.queue[0];
-            const nextTitle = nextTrack.info.title.length > 35 
-                ? nextTrack.info.title.substring(0, 35) + '...' 
+            const nextTitle = nextTrack.info.title.length > 35
+                ? nextTrack.info.title.substring(0, 35) + '...'
                 : nextTrack.info.title;
             const nextAuthor = nextTrack.info.author.length > 25
                 ? nextTrack.info.author.substring(0, 25) + '...'
@@ -127,7 +127,7 @@ class NowPlayingDisplay {
 
         // Beautiful footer with requester
         const requesterName = track.info.requester?.username || 'Unknown';
-        embed.setFooter({ 
+        embed.setFooter({
             text: `Requested by ${requesterName} • Powered by Ultimate Music Bot`,
             iconURL: track.info.requester?.displayAvatarURL() || undefined
         });
@@ -152,7 +152,7 @@ class NowPlayingDisplay {
         try {
             const guild = this.client.guilds.cache.get(player.guildId);
             const textChannel = guild?.channels.cache.get(player.textChannel);
-            
+
             if (!textChannel) return;
 
             // Clear any existing interval for this guild
@@ -160,7 +160,18 @@ class NowPlayingDisplay {
 
             // Create and send initial embed
             const embed = this.createNowPlayingEmbed(player, track, thumbnail);
-            const message = await textChannel.send({ embeds: [embed] });
+
+            const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+            const row = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId('add_to_playlist')
+                        .setLabel('Add to Playlist')
+                        .setEmoji('➕')
+                        .setStyle(ButtonStyle.Success)
+                );
+
+            const message = await textChannel.send({ embeds: [embed], components: [row] });
 
             // Set up real-time progress bar update (every 5 seconds)
             const updateInterval = setInterval(async () => {

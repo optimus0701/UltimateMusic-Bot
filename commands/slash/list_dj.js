@@ -11,15 +11,10 @@ module.exports = {
     securityToken: COMMAND_SECURITY_TOKEN,
 
     async execute(interaction, client) {
-        if (!shiva || !shiva.validateCore || !shiva.validateCore()) {
-            const embed = new EmbedBuilder()
-                .setDescription('❌ System core offline - Command unavailable')
-                .setColor('#FF0000');
-            return interaction.reply({ embeds: [embed], ephemeral: true }).catch(() => { });
-        }
-
         interaction.shivaValidated = true;
         interaction.securityToken = COMMAND_SECURITY_TOKEN;
+
+        await interaction.deferReply();
 
         try {
             const guildId = interaction.guild.id;
@@ -32,7 +27,7 @@ module.exports = {
 
             if (!djPermissions || (!djPermissions.djUsers.length && !djPermissions.djRoles.length)) {
                 embed.setDescription('No DJ permissions set. Everyone can use music commands.');
-                return interaction.reply({ embeds: [embed] });
+                return interaction.editReply({ embeds: [embed] });
             }
 
             let description = '';
@@ -61,14 +56,14 @@ module.exports = {
             }
 
             embed.setDescription(description || 'No DJs configured.');
-            await interaction.reply({ embeds: [embed] });
+            await interaction.editReply({ embeds: [embed] });
 
         } catch (error) {
             console.error('List DJ command error:', error);
             const embed = new EmbedBuilder()
                 .setDescription('❌ An error occurred while listing DJs')
                 .setColor('#FF0000');
-            await interaction.reply({ embeds: [embed], ephemeral: true }).catch(() => { });
+            await interaction.editReply({ embeds: [embed] }).catch(() => { });
         }
     }
 };

@@ -29,7 +29,8 @@ router.get('/status', requireAuth, async (req, res) => {
             const mockInteraction = {
                 user: { id: userId },
                 guild: { id: guildId, ownerId: null },
-                member: null
+                member: null,
+                client: client
             };
 
             const isOwner = config.bot.ownerIds.includes(userId);
@@ -103,7 +104,8 @@ router.post('/skip', requireAuth, async (req, res) => {
         const mockInteraction = {
             user: { id: req.user.id },
             guild: { id: guildId, ownerId: null },
-            member: null
+            member: null,
+            client: client
         };
 
         const isOwner = config.bot.ownerIds.includes(req.user.id);
@@ -141,7 +143,8 @@ router.post('/stop', requireAuth, async (req, res) => {
         const mockInteraction = {
             user: { id: req.user.id },
             guild: { id: guildId, ownerId: null },
-            member: null
+            member: null,
+            client: client
         };
 
         const isOwner = config.bot.ownerIds.includes(req.user.id);
@@ -179,7 +182,8 @@ router.post('/pause', requireAuth, async (req, res) => {
         const mockInteraction = {
             user: { id: req.user.id },
             guild: { id: guildId, ownerId: null },
-            member: null
+            member: null,
+            client: client
         };
 
         const isOwner = config.bot.ownerIds.includes(req.user.id);
@@ -221,7 +225,8 @@ router.post('/volume', requireAuth, async (req, res) => {
         const mockInteraction = {
             user: { id: req.user.id },
             guild: { id: guildId, ownerId: null },
-            member: null
+            member: null,
+            client: client
         };
 
         const isOwner = config.bot.ownerIds.includes(req.user.id);
@@ -236,6 +241,45 @@ router.post('/volume', requireAuth, async (req, res) => {
     } catch (error) {
         console.error('Error setting volume:', error);
         res.status(500).json({ error: 'Failed to set volume' });
+    }
+});
+
+// Shuffle queue
+router.post('/shuffle', requireAuth, async (req, res) => {
+    try {
+        const { guildId } = req.body;
+        if (!guildId) {
+            return res.status(400).json({ error: 'Guild ID required' });
+        }
+
+        const client = req.app.get('discordClient');
+        const player = client.riffy?.players.get(guildId);
+
+        if (!player) {
+            return res.status(404).json({ error: 'No active player' });
+        }
+
+        // Check permissions
+        const djPermissions = await DJPermission.findOne({ guildId });
+        const mockInteraction = {
+            user: { id: req.user.id },
+            guild: { id: guildId, ownerId: null },
+            member: null,
+            client: client
+        };
+
+        const isOwner = config.bot.ownerIds.includes(req.user.id);
+        const hasPermission = isOwner || await hasDJPermission(mockInteraction, djPermissions);
+
+        if (!hasPermission) {
+            return res.status(403).json({ error: 'No permission' });
+        }
+
+        player.queue.shuffle();
+        res.json({ success: true, message: 'Queue shuffled' });
+    } catch (error) {
+        console.error('Error shuffling queue:', error);
+        res.status(500).json({ error: 'Failed to shuffle queue' });
     }
 });
 

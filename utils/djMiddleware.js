@@ -37,6 +37,29 @@ async function hasDJPermission(interaction, djPermissions = null) {
         if (hasDJRole) {
             return true;
         }
+    } else if (!member && djPermissions && djPermissions.djRoles.length > 0) {
+        // If no member object (e.g. from Web UI), but DJ roles are required, 
+        // we might fail validation if roles are strictly enforced. 
+        // However, for web dashboard, we can't easily check roles without fetching member.
+        // For now, if user is not in djUsers, and we can't check roles, strict DJ mode might block them.
+
+        // Strategy: Try to fetch member from guild if client is available
+        if (interaction.guild && interaction.client) {
+            try {
+                const guild = interaction.client.guilds.cache.get(interaction.guild.id);
+                if (guild) {
+                    const fetchedMember = await guild.members.fetch(interaction.user.id);
+                    if (fetchedMember && fetchedMember.roles) {
+                        const hasDJRole = djPermissions.djRoles.some(dj =>
+                            fetchedMember.roles.cache.has(dj.roleId)
+                        );
+                        if (hasDJRole) return true;
+                    }
+                }
+            } catch (e) {
+                // Ignore fetch errors
+            }
+        }
     }
 
     return false;

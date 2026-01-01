@@ -89,22 +89,21 @@ module.exports = {
     securityToken: COMMAND_SECURITY_TOKEN,
 
     async execute(interaction, client) {
-        if (!shiva || !shiva.validateCore || !shiva.validateCore()) {
-            const embed = new EmbedBuilder()
-                .setDescription('❌ System core offline - Command unavailable')
-                .setColor('#FF0000');
-            return interaction.reply({ embeds: [embed], ephemeral: true }).catch(() => {});
-        }
-
         interaction.shivaValidated = true;
         interaction.securityToken = COMMAND_SECURITY_TOKEN;
 
-        await interaction.deferReply();
-
-        const subcommand = interaction.options.getSubcommand();
-        const playlistManager = new PlaylistManager();
+        try {
+            if (!interaction.replied && !interaction.deferred) {
+                await interaction.deferReply();
+            }
+        } catch (err) {
+            if (err.code !== 40060) throw err;
+        }
 
         try {
+            const subcommand = interaction.options.getSubcommand();
+            const playlistManager = new PlaylistManager();
+
             switch (subcommand) {
                 case 'create':
                     await this.handleCreate(interaction, playlistManager);
@@ -130,8 +129,12 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setDescription(`❌ ${error.message || 'An error occurred!'}`)
                 .setColor('#FF0000');
-            return interaction.editReply({ embeds: [embed] })
-                ;
+
+            try {
+                await interaction.editReply({ embeds: [embed] });
+            } catch (replyError) {
+                console.error('Failed to send error message:', replyError.message);
+            }
         }
     },
 
@@ -148,8 +151,7 @@ module.exports = {
             .setDescription(`✅ Created playlist **${playlist.name}**!`)
             .setColor('#1DB954');
 
-        return interaction.editReply({ embeds: [embed] })
-            ;
+        return interaction.editReply({ embeds: [embed] });
     },
 
     async handleDelete(interaction, playlistManager) {
@@ -165,8 +167,7 @@ module.exports = {
             .setDescription(`🗑️ Deleted playlist **${playlist.name}** (${playlist.songs.length} songs)`)
             .setColor('#1DB954');
 
-        return interaction.editReply({ embeds: [embed] })
-            ;
+        return interaction.editReply({ embeds: [embed] });
     },
 
     async handleAdd(interaction, playlistManager, client) {
@@ -178,7 +179,7 @@ module.exports = {
         if (query) {
             // Search for the song - no need to be in voice channel
             const result = await client.riffy.resolve({ query });
-            
+
             if (!result || !result.tracks || result.tracks.length === 0) {
                 throw new Error('No results found for your query!');
             }
@@ -193,7 +194,7 @@ module.exports = {
         } else {
             // Get currently playing song
             const player = client.riffy.players.get(interaction.guild.id);
-            
+
             if (!player || !player.current) {
                 throw new Error('No song is currently playing! Please specify a song or play one first.');
             }
@@ -218,8 +219,7 @@ module.exports = {
             .setDescription(`✅ Added **${songData.title}** to playlist **${playlistName}**!`)
             .setColor('#1DB954');
 
-        return interaction.editReply({ embeds: [embed] })
-            ;
+        return interaction.editReply({ embeds: [embed] });
     },
 
     async handleRemoveSong(interaction, playlistManager) {
@@ -237,8 +237,7 @@ module.exports = {
             .setDescription(`🗑️ Removed **${result.removedSong.title}** from playlist **${playlistName}**!`)
             .setColor('#1DB954');
 
-        return interaction.editReply({ embeds: [embed] })
-            ;
+        return interaction.editReply({ embeds: [embed] });
     },
 
     async handleRename(interaction, playlistManager) {
@@ -256,8 +255,7 @@ module.exports = {
             .setDescription(`✅ Renamed playlist **${oldName}** to **${newName}**!`)
             .setColor('#1DB954');
 
-        return interaction.editReply({ embeds: [embed] })
-            ;
+        return interaction.editReply({ embeds: [embed] });
     },
 
     async handlePlay(interaction, playlistManager, client) {
@@ -266,7 +264,7 @@ module.exports = {
         // Check voice channel conditions
         const ConditionChecker = require('../../utils/checks');
         const checker = new ConditionChecker(client);
-        
+
         const conditions = await checker.checkMusicConditions(
             interaction.guild.id,
             interaction.user.id,
@@ -326,7 +324,6 @@ module.exports = {
             .setDescription(`✅ Added **${addedCount}** song${addedCount !== 1 ? 's' : ''} from playlist **${playlist.name}**!`)
             .setColor('#1DB954');
 
-        return interaction.editReply({ embeds: [embed] })
-            ;
+        return interaction.editReply({ embeds: [embed] });
     }
 };

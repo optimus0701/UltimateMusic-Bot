@@ -1,5 +1,5 @@
 const mainClient = require('./main');
-require('./shiva');
+// require('./shiva');
 const path = require('path');
 const express = require("express");
 const session = require('express-session');
@@ -41,10 +41,20 @@ app.use(passport.session());
 // Store Discord client in app for routes to access
 app.set('discordClient', mainClient);
 
-// Serve main dashboard
+// Serve static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Routes
 app.get('/', (req, res) => {
-    const imagePath = path.join(__dirname, 'index.html');
-    res.sendFile(imagePath);
+    res.redirect('/dashboard');
+});
+
+app.get('/dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+});
+
+app.get('/player', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'player.html'));
 });
 
 // API endpoint for bot stats

@@ -12,7 +12,7 @@ class PlaylistManager {
             }
 
             // Check if playlist already exists
-            const exists = await this.playlistExists(userId, guildId, name);
+            const exists = await this.playlistExists(userId, null, name);
             if (exists) {
                 throw new Error('A playlist with this name already exists!');
             }
@@ -40,7 +40,6 @@ class PlaylistManager {
     async deletePlaylist(userId, guildId, name) {
         const result = await Playlist.findOneAndDelete({
             userId,
-            guildId,
             name
         });
 
@@ -57,7 +56,6 @@ class PlaylistManager {
     async getPlaylist(userId, guildId, name) {
         const playlist = await Playlist.findOne({
             userId,
-            guildId,
             name
         });
 
@@ -71,11 +69,13 @@ class PlaylistManager {
     /**
      * Get all playlists for a user in a guild
      */
-    async getUserPlaylists(userId, guildId) {
-        const playlists = await Playlist.find({
-            userId,
-            guildId
-        }).sort({ createdAt: -1 });
+    async getUserPlaylists(userId, guildId = null) {
+        const query = { userId };
+        if (guildId) {
+            query.guildId = guildId;
+        }
+
+        const playlists = await Playlist.find(query).sort({ createdAt: -1 });
 
         return playlists;
     }
@@ -86,7 +86,6 @@ class PlaylistManager {
     async addSong(userId, guildId, playlistName, songData) {
         const playlist = await Playlist.findOne({
             userId,
-            guildId,
             name: playlistName
         });
 
@@ -118,7 +117,6 @@ class PlaylistManager {
     async removeSong(userId, guildId, playlistName, position) {
         const playlist = await Playlist.findOne({
             userId,
-            guildId,
             name: playlistName
         });
 
@@ -147,13 +145,13 @@ class PlaylistManager {
         }
 
         // Check if new name already exists
-        const exists = await this.playlistExists(userId, guildId, newName);
+        const exists = await this.playlistExists(userId, null, newName);
         if (exists) {
             throw new Error('A playlist with the new name already exists!');
         }
 
         const playlist = await Playlist.findOneAndUpdate(
-            { userId, guildId, name: oldName },
+            { userId, name: oldName },
             { name: newName },
             { new: true }
         );
@@ -171,7 +169,6 @@ class PlaylistManager {
     async playlistExists(userId, guildId, name) {
         const count = await Playlist.countDocuments({
             userId,
-            guildId,
             name
         });
 
@@ -183,8 +180,7 @@ class PlaylistManager {
      */
     async getPlaylistCount(userId, guildId) {
         return await Playlist.countDocuments({
-            userId,
-            guildId
+            userId
         });
     }
 }
