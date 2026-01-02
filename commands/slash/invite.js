@@ -48,7 +48,7 @@ module.exports = {
                     `• **Commands**: 25 slash commands`
                 )
                 .setTimestamp()
-                .setFooter({ text: 'Ultimate Music Bot • Developed by GlaceYT' });
+                .setFooter({ text: 'Ultimate Music Bot • Developed by Domi' });
 
             await interaction.reply({ embeds: [embed] });
         } catch (error) {

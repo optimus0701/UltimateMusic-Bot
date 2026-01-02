@@ -4,7 +4,7 @@
  * @fileoverview 
  * @module ConfigurationManager
  * @version 1.0.0
- * @author GlaceYT
+ * @author Domi
  */
 
 const EnvironmentVariableProcessor = require('process').env;

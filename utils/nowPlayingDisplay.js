@@ -165,8 +165,23 @@ class NowPlayingDisplay {
             const row = new ActionRowBuilder()
                 .addComponents(
                     new ButtonBuilder()
+                        .setCustomId('music_volume_down')
+                        .setEmoji('🔉')
+                        .setStyle(ButtonStyle.Secondary),
+                    new ButtonBuilder()
+                        .setCustomId('music_stop')
+                        .setEmoji('⏹️')
+                        .setStyle(ButtonStyle.Danger),
+                    new ButtonBuilder()
+                        .setCustomId('music_skip')
+                        .setEmoji('⏭️')
+                        .setStyle(ButtonStyle.Secondary),
+                    new ButtonBuilder()
+                        .setCustomId('music_volume_up')
+                        .setEmoji('🔊')
+                        .setStyle(ButtonStyle.Secondary),
+                    new ButtonBuilder()
                         .setCustomId('add_to_playlist')
-                        .setLabel('Add to Playlist')
                         .setEmoji('➕')
                         .setStyle(ButtonStyle.Success)
                 );

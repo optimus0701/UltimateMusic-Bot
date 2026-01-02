@@ -10,29 +10,29 @@
       alt="License: MIT" />
   </a>
 
-  <a href="https://www.paypal.me/@GlaceYT">
+  <a href="https://www.paypal.me/@optimus0701">
     <img src="https://img.shields.io/badge/Donate-PayPal-0079C1?style=flat-square&logo=paypal"
       alt="Donate" />
   </a>
 </p>
 
 <p align="center">
-  <a href="https://www.youtube.com/channel/@GlaceYT">
+  <a href="https://www.youtube.com/channel/@optimus0701">
     <img src="https://img.shields.io/badge/YouTube-Subscribe-red?style=flat-square&logo=youtube"
       alt="YouTube" />
   </a>
 
-  <a href="https://discord.gg/xQF9f9yUEM">
+  <a href="https://discord.gg/M4Xv5MvdF8">
     <img src="https://img.shields.io/badge/Discord-Join-blue?style=flat-square&logo=discord"
       alt="Join Discord" />
   </a>
 
-  <a href="https://www.instagram.com/glaceytt">
+  <a href="https://www.instagram.com/_vv.do_">
     <img src="https://img.shields.io/badge/Instagram-Follow-E4405F?style=flat-square&logo=instagram"
       alt="Instagram" />
   </a>
 
-  <a href="https://www.facebook.com/youulewd/">
+  <a href="https://www.facebook.com/vv.do.0512">
     <img src="https://img.shields.io/badge/Facebook-Follow-1877F2?style=flat-square&logo=facebook"
       alt="Facebook" />
   </a>
@@ -42,51 +42,41 @@
 
 <h3>How to Install</h3>
 
-<h4>Step 1: Update <code>config.json</code> [ USE ENV FILES ]</h4>
+<h4>Step 1: Configure Environment Variables</h4>
 
 <ol>
-  <li>Open the <code>config.json</code> and add your MongoDB URL.</li>
+  <li>Create a <code>.env</code> file in the root directory (copy from <code>.env.example</code> if available).</li>
+  <li>Add your configuration details:</li>
 </ol>
 
 <h4>ENV SETUP</h4>
 
 <pre>
-TOKEN=
-MONGODB_URI=
+TOKEN=your_bot_token
+MONGODB_URI=your_mongodb_connection_string
+DISCORD_REDIRECT_URI=http://localhost:8888/dashboard
+OWNER_IDS=your_discord_id
 </pre>
 
-<h4>Step 2: Set Up Hosting Service</h4>
+<h4>Step 2: Install Dependencies</h4>
 
-<ol>
-  <li>Go to your preferred hosting service. For this guide, we use <a href="https://render.com/">Render</a>.</li>
-  <li>In the Build & Deploy section, paste your repository URL.</li>
-</ol>
-
-<h4>Step 3: Add Build and Start Commands</h4>
 <pre>
-Run the following commands to install dependencies and start your bot:
-
 npm install
+</pre>
+
+<h4>Step 3: Start the Bot</h4>
+
+<pre>
 node index.js
 </pre>
 
-<h4>Step 4: Get Your Bot Token</h4>
+<h4>Step 4: Invite Your Bot</h4>
 <ol>
-  <li>Navigate to the Discord Developer Portal.</li>
-  <li>Find your application, and retrieve the bot token from the "Bot" section.</li>
+  <li>Use the <code>/invite</code> command in your server or generate a link from the Developer Portal.</li>
 </ol>
 
-<h4>Step 5: Set Environment Variable</h4>
-<ol>
-  <li>Create an environment variable with the following details:</li>
-  <ul>
-    <li>Key: TOKEN</li>
-    <li>Value: [your bot token]</li>
-  </ul>
-  <li>Deploy your application using your hosting service’s deployment process.</li>
-</ol>
 
-<h4>Step 6: Wait and Test</h4>
+<h4>Step 5: Test Your Bot</h4>
 <ol>
   <li>Wait approximately five minutes for your bot to deploy and start up.</li>
   <li>Test your bot by sending commands to ensure it is operational.</li>

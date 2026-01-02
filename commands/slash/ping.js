@@ -52,7 +52,7 @@ module.exports = {
                     `• **Uptime:** ${hours}h ${minutes}m ${seconds}s`
                 )
                 .setTimestamp()
-                .setFooter({ text: 'Ultimate Music Bot • Developed by GlaceYT' });
+                .setFooter({ text: 'Ultimate Music Bot • Developed by Domi' });
 
             await interaction.editReply({ embeds: [embed] });
         } catch (error) {

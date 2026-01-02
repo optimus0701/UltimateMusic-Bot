@@ -3,7 +3,7 @@
  * 
  * @fileoverview 
  * @version 1.0.0
- * @author GlaceYT
+ * @author Domi
  */
 
 const DiscordRESTClientManager = require('discord.js').REST;
@@ -20,7 +20,7 @@ const CentralEmbedManagementSystem = require('../utils/centralEmbed');
 module.exports = {
     name: 'clientReady',
     once: true,
-    
+
     /**
      * Execute comprehensive client ready initialization sequence
      * 
@@ -54,7 +54,7 @@ class ClientInitializationManager {
             statusSystemReady: false
         };
     }
-    
+
     /**
      * Execute comprehensive startup sequence with advanced monitoring
      * 
@@ -65,9 +65,9 @@ class ClientInitializationManager {
         try {
 
             this.executeStartupNotificationProcedures();
-            
+
             await this.initializeAudioProcessingSubsystem();
-            
+
             await this.executeCommandRegistrationProcedures();
 
             await this.initializeEmbedManagementSubsystem();
@@ -75,12 +75,12 @@ class ClientInitializationManager {
             await this.activateStatusManagementSystem();
 
             this.validateStartupSequenceCompletion();
-            
+
         } catch (initializationException) {
             this.handleInitializationFailure(initializationException);
         }
     }
-    
+
     /**
      * Execute startup notification procedures with system information
      */
@@ -88,7 +88,7 @@ class ClientInitializationManager {
         console.log(`🎵 ${this.clientRuntimeInstance.user.tag} is online and ready!`);
         console.log(`🆔 Client ID: ${this.clientRuntimeInstance.user.id}`);
     }
-    
+
     /**
      * Initialize comprehensive audio processing subsystem
      * 
@@ -98,13 +98,13 @@ class ClientInitializationManager {
         try {
             this.clientRuntimeInstance.riffy.init(this.clientRuntimeInstance.user.id);
             this.initializationStatus.audioSystemReady = true;
-            
+
         } catch (audioInitializationException) {
             console.error('❌ Audio system initialization failed:', audioInitializationException);
             throw audioInitializationException;
         }
     }
-    
+
     /**
      * Execute comprehensive command registration procedures
      * 
@@ -113,10 +113,10 @@ class ClientInitializationManager {
     async executeCommandRegistrationProcedures() {
         const commandRegistrationService = new SlashCommandRegistrationService(this.clientRuntimeInstance);
         const registrationResult = await commandRegistrationService.executeCommandDiscoveryAndRegistration();
-        
+
         this.initializationStatus.commandsRegistered = registrationResult.success;
     }
-    
+
     /**
      * Initialize comprehensive embed management subsystem
      * 
@@ -127,13 +127,13 @@ class ClientInitializationManager {
             const centralEmbedManager = new CentralEmbedManagementSystem(this.clientRuntimeInstance);
             await centralEmbedManager.resetAllCentralEmbedsOnStartup();
             this.initializationStatus.embedSystemReady = true;
-            
+
         } catch (embedSystemException) {
             console.error('❌ Embed system initialization failed:', embedSystemException);
             this.initializationStatus.embedSystemReady = false;
         }
     }
-    
+
     /**
      * Activate comprehensive status management system
      * 
@@ -145,14 +145,14 @@ class ClientInitializationManager {
                 this.clientRuntimeInstance.guilds.cache.size
             );
             this.initializationStatus.statusSystemReady = true;
-            
+
         } catch (statusSystemException) {
             console.error('❌ Status system initialization failed:', statusSystemException);
             // Non-critical failure - continue startup
             this.initializationStatus.statusSystemReady = false;
         }
     }
-    
+
     /**
      * Validate comprehensive startup sequence completion
      * 
@@ -160,16 +160,16 @@ class ClientInitializationManager {
      */
     validateStartupSequenceCompletion() {
         const initializationDuration = Date.now() - this.startupTimestamp;
-        const criticalSystemsOnline = this.initializationStatus.audioSystemReady && 
-                                     this.initializationStatus.commandsRegistered;
-        
+        const criticalSystemsOnline = this.initializationStatus.audioSystemReady &&
+            this.initializationStatus.commandsRegistered;
+
         if (criticalSystemsOnline) {
             console.log(`✅ Bot initialization completed successfully in ${initializationDuration}ms`);
         } else {
             console.warn('⚠️ Bot started with some subsystem failures');
         }
     }
-    
+
     /**
      * Handle initialization failures with comprehensive error reporting
      */
@@ -193,7 +193,7 @@ class SlashCommandRegistrationService {
         this.discoveredCommands = [];
         this.registrationSuccess = false;
     }
-    
+
     /**
      * Execute comprehensive command discovery and registration sequence
      * 
@@ -201,17 +201,17 @@ class SlashCommandRegistrationService {
      */
     async executeCommandDiscoveryAndRegistration() {
         try {
-    
+
             await this.executeCommandDiscoveryProcedures();
-            
-      
+
+
             await this.executeDiscordAPIRegistration();
-            
+
             return {
                 success: this.registrationSuccess,
                 commandCount: this.discoveredCommands.length
             };
-            
+
         } catch (registrationException) {
             console.error('❌ Command registration failed:', registrationException);
             return {
@@ -221,37 +221,37 @@ class SlashCommandRegistrationService {
             };
         }
     }
-    
+
 
     async executeCommandDiscoveryProcedures() {
         const slashCommandDirectoryPath = SystemPathResolutionUtility.join(__dirname, '..', 'commands', 'slash');
-        
+
         if (FileSystemOperationalInterface.existsSync(slashCommandDirectoryPath)) {
             const discoveredCommandFiles = FileSystemOperationalInterface
                 .readdirSync(slashCommandDirectoryPath)
                 .filter(fileEntity => fileEntity.endsWith('.js'));
-            
+
             for (const commandFile of discoveredCommandFiles) {
                 const commandModuleInstance = require(SystemPathResolutionUtility.join(slashCommandDirectoryPath, commandFile));
                 this.discoveredCommands.push(commandModuleInstance.data.toJSON());
             }
         }
     }
-    
+
     /**
      * Execute Discord API registration with comprehensive error handling
      */
     async executeDiscordAPIRegistration() {
         const discordRESTClient = new DiscordRESTClientManager()
             .setToken(SystemConfigurationManager.discord.token || process.env.TOKEN);
-        
+
         console.log('🔄 Started refreshing slash commands...');
-        
+
         await discordRESTClient.put(
             DiscordApplicationRoutesRegistry.applicationCommands(this.clientRuntimeInstance.user.id),
             { body: this.discoveredCommands }
         );
-        
+
         this.registrationSuccess = true;
         console.log('✅ Successfully registered slash commands!');
     }

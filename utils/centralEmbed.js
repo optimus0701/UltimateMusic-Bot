@@ -23,9 +23,9 @@ class CentralEmbedHandler {
     async createCentralEmbed(channelId, guildId) {
         try {
             const channel = await this.client.channels.fetch(channelId);
-            
+
             const embed = new EmbedBuilder()
-            .setAuthor({ name: 'Ultimate Music Control Center', iconURL: 'https://cdn.discordapp.com/emojis/896724352949706762.gif', url: 'https://discord.gg/xQF9f9yUEM' })
+                .setAuthor({ name: 'Ultimate Music Control Center', iconURL: 'https://cdn.discordapp.com/emojis/896724352949706762.gif', url: 'https://discord.gg/xQF9f9yUEM' })
                 .setDescription([
                     '',
                     '- Simply type a **song name** or **YouTube link** to start the party!',
@@ -33,7 +33,7 @@ class CentralEmbedHandler {
                     '',
                     '✨ *Ready to fill this place with amazing music?*'
                 ].join('\n'))
-                .setColor(0x9966ff) 
+                .setColor(0x9966ff)
                 .addFields(
                     {
                         name: '🎯 Quick Examples',
@@ -49,7 +49,7 @@ class CentralEmbedHandler {
                         name: '🚀 Features',
                         value: [
                             '• 🎵 High quality audio',
-                            '• 📜 Queue management', 
+                            '• 📜 Queue management',
                             '• 🔁 Loop & shuffle modes',
                             '• 🎛️ Volume controls',
                             '• ⚡ Lightning fast search'
@@ -68,14 +68,14 @@ class CentralEmbedHandler {
                     }
                 )
                 .setImage('https://i.ibb.co/DDSdKy31/ezgif-8aec7517f2146d.gif')
-                .setFooter({ 
-                    text: 'Ultimate Music Bot • Developed By GlaceYT!',
+                .setFooter({
+                    text: 'Ultimate Music Bot • Developed By Domi!',
                     iconURL: this.client.user.displayAvatarURL()
                 })
                 .setTimestamp();
 
             const message = await channel.send({ embeds: [embed] });
-            
+
             await Server.findByIdAndUpdate(guildId, {
                 'centralSetup.embedId': message.id,
                 'centralSetup.channelId': channelId
@@ -165,22 +165,22 @@ class CentralEmbedHandler {
 
             const channel = await this.client.channels.fetch(serverConfig.centralSetup.channelId);
             const message = await channel.messages.fetch(serverConfig.centralSetup.embedId);
-            
+
             let embed, components = [];
-            
+
             if (trackInfo) {
                 const statusEmoji = trackInfo.paused ? '⏸️' : '▶️';
                 const statusText = trackInfo.paused ? 'Paused' : 'Now Playing';
                 const loopEmoji = this.getLoopEmoji(trackInfo.loop);
                 const embedColor = trackInfo.paused ? 0xFFA500 : 0x9966ff;
-                
+
                 const validThumbnail = this.validateThumbnail(trackInfo.thumbnail);
-                
+
                 embed = new EmbedBuilder()
-                    .setAuthor({ 
-                        name: `${trackInfo.title}`, 
+                    .setAuthor({
+                        name: `${trackInfo.title}`,
                         iconURL: 'https://cdn.discordapp.com/emojis/896724352949706762.gif',
-                        url: 'https://discord.gg/xQF9f9yUEM' 
+                        url: 'https://discord.gg/xQF9f9yUEM'
                     })
                     .setDescription([
                         `**🎤 Artist:** ${trackInfo.author}`,
@@ -193,8 +193,8 @@ class CentralEmbedHandler {
                         '🎶 *Enjoying the vibes? Type more song names below to keep the party going!*'
                     ].join('\n'))
                     .setColor(embedColor)
-                    .setFooter({ 
-                        text: `Ultimate Music Bot • ${statusText} • Developed By GlaceYT`,
+                    .setFooter({
+                        text: `Ultimate Music Bot • ${statusText} • Developed By Domi`,
                         iconURL: this.client.user.displayAvatarURL()
                     })
                     .setTimestamp();
@@ -204,63 +204,63 @@ class CentralEmbedHandler {
                     embed.setThumbnail(validThumbnail);
                 }
 
-              
+
                 if (!trackInfo.paused) {
                     embed.setImage('https://i.ibb.co/KzbPV8jd/aaa.gif');
                 }
-            
+
                 components = this.createAdvancedControlButtons(trackInfo);
             } else {
-               
+
                 embed = new EmbedBuilder()
-                .setAuthor({ name: 'Ultimate Music Control Center', iconURL: 'https://cdn.discordapp.com/emojis/896724352949706762.gif', url: 'https://discord.gg/xQF9f9yUEM' })
-                .setDescription([
-                    '',
-                    '- Simply type a **song name** or **YouTube link** to start the party!',
-                    '- In free version I only support **YouTube** only.',
-                    '',
-                    '✨ *Ready to fill this place with amazing music?*'
-                ].join('\n'))
-                .setColor(0x9966ff) 
-                .addFields(
-                    {
-                        name: '🎯 Quick Examples',
-                        value: [
-                            '• `shape of you`',
-                            '• `lofi hip hop beats`',
-                            '• `https://youtu.be/dQw4w9WgXcQ`',
-                            '• `imagine dragons believer`'
-                        ].join('\n'),
-                        inline: true
-                    },
-                    {
-                        name: '🚀 Features',
-                        value: [
-                            '• 🎵 High quality audio',
-                            '• 📜 Queue management', 
-                            '• 🔁 Loop & shuffle modes',
-                            '• 🎛️ Volume controls',
-                            '• ⚡ Lightning fast search'
-                        ].join('\n'),
-                        inline: true
-                    },
-                    {
-                        name: '💡 Pro Tips',
-                        value: [
-                            '• Join voice channel first',
-                            '• Use specific song names',
-                            '• Try artist + song combo',
-                            '• Playlists are supported!'
-                        ].join('\n'),
-                        inline: false
-                    }
-                )
-                .setImage('https://i.ibb.co/DDSdKy31/ezgif-8aec7517f2146d.gif')
-                .setFooter({ 
-                    text: 'Ultimate Music Bot • Developed By GlaceYT!',
-                    iconURL: this.client.user.displayAvatarURL()
-                })
-                .setTimestamp();
+                    .setAuthor({ name: 'Ultimate Music Control Center', iconURL: 'https://cdn.discordapp.com/emojis/896724352949706762.gif', url: 'https://discord.gg/xQF9f9yUEM' })
+                    .setDescription([
+                        '',
+                        '- Simply type a **song name** or **YouTube link** to start the party!',
+                        '- In free version I only support **YouTube** only.',
+                        '',
+                        '✨ *Ready to fill this place with amazing music?*'
+                    ].join('\n'))
+                    .setColor(0x9966ff)
+                    .addFields(
+                        {
+                            name: '🎯 Quick Examples',
+                            value: [
+                                '• `shape of you`',
+                                '• `lofi hip hop beats`',
+                                '• `https://youtu.be/dQw4w9WgXcQ`',
+                                '• `imagine dragons believer`'
+                            ].join('\n'),
+                            inline: true
+                        },
+                        {
+                            name: '🚀 Features',
+                            value: [
+                                '• 🎵 High quality audio',
+                                '• 📜 Queue management',
+                                '• 🔁 Loop & shuffle modes',
+                                '• 🎛️ Volume controls',
+                                '• ⚡ Lightning fast search'
+                            ].join('\n'),
+                            inline: true
+                        },
+                        {
+                            name: '💡 Pro Tips',
+                            value: [
+                                '• Join voice channel first',
+                                '• Use specific song names',
+                                '• Try artist + song combo',
+                                '• Playlists are supported!'
+                            ].join('\n'),
+                            inline: false
+                        }
+                    )
+                    .setImage('https://i.ibb.co/DDSdKy31/ezgif-8aec7517f2146d.gif')
+                    .setFooter({
+                        text: 'Ultimate Music Bot • Developed By Domi!',
+                        iconURL: this.client.user.displayAvatarURL()
+                    })
+                    .setTimestamp();
 
                 components = [];
             }
@@ -281,22 +281,22 @@ class CentralEmbedHandler {
                     .setCustomId('music_skip')
                     .setEmoji('⏭️')
                     .setStyle(ButtonStyle.Primary),
-                    
+
                 new ButtonBuilder()
                     .setCustomId(trackInfo.paused ? 'music_resume' : 'music_pause')
                     .setEmoji(trackInfo.paused ? '▶️' : '⏸️')
                     .setStyle(ButtonStyle.Success),
-                    
+
                 new ButtonBuilder()
                     .setCustomId('music_stop')
                     .setEmoji('🛑')
                     .setStyle(ButtonStyle.Danger),
-                    
+
                 new ButtonBuilder()
                     .setCustomId('music_queue')
                     .setEmoji('📜')
                     .setStyle(ButtonStyle.Success),
-                    
+
                 new ButtonBuilder()
                     .setLabel('\u200B\u200BLoop\u200B')
                     .setCustomId('music_loop')
@@ -310,7 +310,7 @@ class CentralEmbedHandler {
                     .setCustomId('music_volume_down')
                     .setEmoji('🔉')
                     .setStyle(ButtonStyle.Secondary),
-                    
+
                 new ButtonBuilder()
                     .setCustomId('music_volume_up')
                     .setEmoji('🔊')
@@ -325,7 +325,7 @@ class CentralEmbedHandler {
                     .setCustomId('music_shuffle')
                     .setEmoji('🔀')
                     .setStyle(ButtonStyle.Secondary),
-                    
+
                 new ButtonBuilder()
                     .setLabel('Support')
                     .setStyle(ButtonStyle.Link)
@@ -345,10 +345,10 @@ class CentralEmbedHandler {
 
     formatDuration(duration) {
         if (!duration) return '0:00';
-        
+
         const minutes = Math.floor(duration / 60000);
         const seconds = Math.floor((duration % 60000) / 1000);
-        
+
         return `${minutes}:${seconds.toString().padStart(2, '0')}`;
     }
 }

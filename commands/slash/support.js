@@ -8,13 +8,13 @@ module.exports = {
         .setName('support')
         .setDescription('Get support server and contact information'),
     securityToken: COMMAND_SECURITY_TOKEN,
-    
+
     async execute(interaction) {
         if (!shiva || !shiva.validateCore || !shiva.validateCore()) {
             const embed = new EmbedBuilder()
                 .setDescription('❌ System core offline - Command unavailable')
                 .setColor('#FF0000');
-            return interaction.reply({ embeds: [embed], ephemeral: true }).catch(() => {});
+            return interaction.reply({ embeds: [embed], ephemeral: true }).catch(() => { });
         }
 
         interaction.shivaValidated = true;
@@ -26,13 +26,12 @@ module.exports = {
                 .setColor(0x1DB954)
                 .setDescription(
                     'Need help or have questions? Join our official support server:\n' +
-                    '[Support Server](https://discord.gg/xQF9f9yUEM)\n\n' +
-                    'For direct inquiries, contact: **GlaceYT**\n\n' +
-                    'Website: https://glaceyt.com'
+                    '[Support Server](https://discord.gg/M4Xv5MvdF8)\n\n' +
+                    'For direct inquiries, contact: **Dominator**\n\n'
                 )
                 .setTimestamp()
-                .setFooter({ text: 'Ultimate Music Bot • Developed by GlaceYT' });
-            
+                .setFooter({ text: 'Ultimate Music Bot • Developed by Domi' });
+
             await interaction.reply({ embeds: [embed] });
         } catch (error) {
             console.error('Support command error:', error);

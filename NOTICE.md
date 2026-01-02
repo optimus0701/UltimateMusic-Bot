@@ -1,6 +1,6 @@
 ## Additional Terms (No Selling Clause)
 
-While this project is licensed under AGPL-3.0, the original author ([GlaceYT](https://github.com/GlaceYT)) explicitly **prohibits**:
+While this project is licensed under AGPL-3.0, the original author ([optimus0701](https://github.com/optimus0701)) explicitly **prohibits**:
 
 - Selling the bot or modified versions of it
 - Using the bot or its derivatives for **any commercial gain**

@@ -99,5 +99,5 @@ app.use('/auth', authRoutes);
 app.use('/api/player', playerRoutes);
 
 app.listen(port, '0.0.0.0', () => {
-    console.log(`🔗 Listening to GlaceYT : http://0.0.0.0:${port}`);
+    console.log(`🔗 Listening to Domi : http://0.0.0.0:${port}`);
 });

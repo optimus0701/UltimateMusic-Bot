@@ -16,42 +16,67 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setDescription('❌ System core offline - Command unavailable')
                 .setColor('#FF0000');
-            return interaction.reply({ embeds: [embed], ephemeral: true }).catch(() => {});
+            return interaction.reply({ embeds: [embed], ephemeral: true }).catch(() => { });
         }
 
         interaction.shivaValidated = true;
         interaction.securityToken = COMMAND_SECURITY_TOKEN;
 
         try {
+            // Define command categories
+            const categories = {
+                'Music': ['play', 'pause', 'skip', 'stop', 'queue', 'loop', 'shuffle', 'volume', 'nowplaying', 'join', 'leave', 'lyrics', 'playlist'],
+                'Utility': ['help', 'ping', 'dashboard', 'invite', 'support', 'stats']
+            };
+
             const slashCommandsPath = path.join(__dirname, '..', 'slash');
             const slashFiles = fs.readdirSync(slashCommandsPath).filter(file => file.endsWith('.js'));
-            const slashCommands = slashFiles.map(file => {
+
+            const commands = [];
+            for (const file of slashFiles) {
                 const cmd = require(path.join(slashCommandsPath, file));
-                return {
-                    name: cmd.data?.name || 'Unknown',
-                    description: cmd.data?.description || 'No description'
-                };
-            });
-
-            let description = `**🌐 Bot Stats:** Serving in **${client.guilds.cache.size}** servers.\n\n`;
-
-            description += `**⚡ Slash Commands [${slashCommands.length}]:**\n`;
-            slashCommands.forEach(cmd => {
-                description += `- \`/${cmd.name}\` - ${cmd.description}\n`;
-            });
-
-            if (description.length > 4096) {
-                description = description.slice(0, 4093) + '...';
+                if (cmd.data) {
+                    commands.push({
+                        name: cmd.data.name,
+                        description: cmd.data.description
+                    });
+                }
             }
 
             const embed = new EmbedBuilder()
-                .setTitle('📖 Ultimate Music Bot - Command List')
+                .setTitle('📖 Ultimate Music Bot - User Guide')
                 .setColor(0x1DB954)
-                .setDescription(description)
-                .setFooter({ text: 'Developed by GlaceYT | https://glaceyt.com' })
+                .setDescription(`**🌐 Bot Status:** Active in **${client.guilds.cache.size}** servers.\nHere are the commands you can use:`)
+                .setFooter({ text: 'Developed by Domi | https://glaceyt.com' })
                 .setTimestamp();
 
-            await interaction.reply({ embeds: [embed] });
+            // Add fields for categories
+            for (const [category, cmdNames] of Object.entries(categories)) {
+                const categoryCommands = commands.filter(cmd => cmdNames.includes(cmd.name));
+                if (categoryCommands.length > 0) {
+                    const commandList = categoryCommands.map(cmd => `\`/${cmd.name}\`\n*${cmd.description}*`).join('\n\n');
+                    embed.addFields({
+                        name: `${category === 'Music' ? '🎵' : '🛠️'} ${category} Commands`,
+                        value: commandList,
+                        inline: true
+                    });
+                }
+            }
+
+            // Catch-all for uncategorized commands
+            const categorizedNames = Object.values(categories).flat();
+            const otherCommands = commands.filter(cmd => !categorizedNames.includes(cmd.name));
+
+            if (otherCommands.length > 0) {
+                const otherList = otherCommands.map(cmd => `\`/${cmd.name}\`\n*${cmd.description}*`).join('\n\n');
+                embed.addFields({
+                    name: '📂 Other Commands',
+                    value: otherList,
+                    inline: false
+                });
+            }
+
+            await interaction.reply({ embeds: [embed], ephemeral: true });
 
         } catch (error) {
             console.error('Help command error:', error);

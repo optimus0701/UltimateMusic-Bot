@@ -4,7 +4,7 @@
  * 
  * @fileoverview Core application
  * @version 1.0.0
- * @author GlaceYT
+ * @author Domi
  */
 
 const DiscordClientFramework = require('discord.js').Client;
