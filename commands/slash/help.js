@@ -47,7 +47,7 @@ module.exports = {
                 .setTitle('📖 Ultimate Music Bot - User Guide')
                 .setColor(0x1DB954)
                 .setDescription(`**🌐 Bot Status:** Active in **${client.guilds.cache.size}** servers.\nHere are the commands you can use:`)
-                .setFooter({ text: 'Developed by Domi | https://glaceyt.com' })
+                .setFooter({ text: 'Developed by Domi' })
                 .setTimestamp();
 
             // Add fields for categories
