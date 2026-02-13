@@ -45,20 +45,14 @@ class NowPlayingDisplay {
     }
 
     /**
-     * Create Now Playing embed
+     * Create Now Playing embed - Minimalist Design
      */
     createNowPlayingEmbed(player, track, thumbnail) {
-        const progress = this.getPlayerProgress(player);
         const duration = this.formatDuration(track.info.length);
-        const currentTime = this.formatDuration(progress.current);
-        const progressBar = this.createProgressBar(progress.current, track.info.length);
 
-        // Calculate percentage
-        const percentage = Math.round((progress.current / track.info.length) * 100) || 0;
-
-        // Beautiful gradient color
+        // Beautiful gradient color matching lo-fi theme
         const embed = new EmbedBuilder()
-            .setColor('#9B59B6') // Purple gradient
+            .setColor('#9B59B6') // Purple gradient from background
             .setAuthor({
                 name: '♫ Now Playing',
                 iconURL: this.client.user.displayAvatarURL()
@@ -66,57 +60,24 @@ class NowPlayingDisplay {
             .setTitle(track.info.title.length > 50 ? track.info.title.substring(0, 50) + '...' : track.info.title)
             .setURL(track.info.uri)
             .setDescription(
-                `**🎤 ${track.info.author}**\n\n` +
-                `\`${currentTime}\` ${progressBar} \`${duration}\`\n` +
-                `**${percentage}%** completed`
+                `🎤 **${track.info.author}**\n\n` +
+                `⏱️ Duration: \`${duration}\``
             )
             .setTimestamp();
 
-        // Add beautiful thumbnail
+        // Add large image for album art (instead of small thumbnail)
         if (thumbnail) {
-            embed.setThumbnail(thumbnail);
+            embed.setImage(thumbnail);
         }
 
-        // Create compact info fields
+        // Only show loop status if enabled
         const fields = [];
-
-        // Volume and Queue in one line
-        const statusInfo = [];
-        statusInfo.push(`🔊 **${player.volume}%**`);
-        if (player.queue.size > 0) {
-            statusInfo.push(`📋 **${player.queue.size}** queued`);
-        }
-        if (statusInfo.length > 0) {
-            fields.push({
-                name: '━━━━━━━━━━━━━━━━━━━',
-                value: statusInfo.join(' • '),
-                inline: false
-            });
-        }
-
-        // Loop status if enabled
         if (player.loop && player.loop !== 'none') {
             const loopEmoji = player.loop === 'track' ? '🔂' : '🔁';
             const loopText = player.loop === 'track' ? 'Track Repeat' : 'Queue Repeat';
             fields.push({
                 name: `${loopEmoji} Loop Mode`,
                 value: `**${loopText}**`,
-                inline: true
-            });
-        }
-
-        // Next track preview
-        if (player.queue.size > 0) {
-            const nextTrack = player.queue[0];
-            const nextTitle = nextTrack.info.title.length > 35
-                ? nextTrack.info.title.substring(0, 35) + '...'
-                : nextTrack.info.title;
-            const nextAuthor = nextTrack.info.author.length > 25
-                ? nextTrack.info.author.substring(0, 25) + '...'
-                : nextTrack.info.author;
-            fields.push({
-                name: '⏭️ Up Next',
-                value: `**${nextTitle}**\n${nextAuthor}`,
                 inline: false
             });
         }
@@ -125,10 +86,10 @@ class NowPlayingDisplay {
             embed.addFields(fields);
         }
 
-        // Beautiful footer with requester
+        // Simplified footer with requester
         const requesterName = track.info.requester?.username || 'Unknown';
         embed.setFooter({
-            text: `Requested by ${requesterName} • Powered by Ultimate Music Bot`,
+            text: `Requested by ${requesterName}`,
             iconURL: track.info.requester?.displayAvatarURL() || undefined
         });
 
@@ -188,34 +149,8 @@ class NowPlayingDisplay {
 
             const message = await textChannel.send({ embeds: [embed], components: [row] });
 
-            // Set up real-time progress bar update (every 5 seconds)
-            const updateInterval = setInterval(async () => {
-                try {
-                    // Check if player still exists and is playing
-                    const currentPlayer = this.client.riffy.players.get(player.guildId);
-                    if (!currentPlayer || !currentPlayer.current || currentPlayer.current.info.uri !== track.info.uri) {
-                        // Song changed or player stopped, clear interval
-                        this.clearUpdateInterval(player.guildId);
-                        return;
-                    }
-
-                    // Update embed with current progress
-                    const updatedEmbed = this.createNowPlayingEmbed(currentPlayer, track, thumbnail);
-                    await message.edit({ embeds: [updatedEmbed] });
-
-                } catch (error) {
-                    // If message was deleted or error occurred, clear interval
-                    this.clearUpdateInterval(player.guildId);
-                }
-            }, 5000); // Update every 5 seconds
-
-            // Store interval for cleanup
-            this.updateIntervals.set(player.guildId, updateInterval);
-
-            // Auto-clear interval after song duration
-            setTimeout(() => {
-                this.clearUpdateInterval(player.guildId);
-            }, track.info.length + 5000);
+            // No real-time updates needed for minimalist design (no progress bar)
+            // Just send the embed once and keep it static
 
         } catch (error) {
             console.error('Failed to send Now Playing embed:', error.message);

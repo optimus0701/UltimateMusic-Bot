@@ -11,7 +11,7 @@ class PlayerHandler {
     async createPlayer(guildId, voiceChannelId, textChannelId, options = {}) {
         try {
             let player = this.client.riffy.players.get(guildId);
-            
+
             if (player) {
                 if (player.voiceChannel === voiceChannelId) {
                     return player;
@@ -40,14 +40,16 @@ class PlayerHandler {
         try {
             if (!player) return { type: 'error', message: 'Player not available' };
 
-            const resolve = await this.client.riffy.resolve({ 
-                query: query, 
-                requester: requester 
+            // Console log removed
+            const resolve = await this.client.riffy.resolve({
+                query: query,
+                requester: requester
             });
+            // Console log removed
 
             const { loadType, tracks, playlistInfo } = resolve;
 
-            if (loadType === 'playlist') {
+            if (loadType === 'playlist' || loadType === 'playlist_loaded') {
                 for (const track of tracks) {
                     if (track && track.info) {
                         track.info.requester = requester;
@@ -56,7 +58,7 @@ class PlayerHandler {
                 }
 
                 if (!player.playing && !player.paused) {
-                    await player.play();
+                    player.play();
                 }
 
                 return {
@@ -65,7 +67,7 @@ class PlayerHandler {
                     name: playlistInfo?.name || 'Unknown Playlist'
                 };
 
-            } else if (loadType === 'search' || loadType === 'track') {
+            } else if (loadType === 'search' || loadType === 'track' || loadType === 'search_result' || loadType === 'track_loaded' || (tracks && tracks.length > 0)) {
                 const track = tracks[0];
                 if (!track || !track.info) {
                     return { type: 'error', message: 'No results found' };
@@ -75,7 +77,7 @@ class PlayerHandler {
                 player.queue.add(track);
 
                 if (!player.playing && !player.paused) {
-                    await player.play();
+                    player.play();
                 }
 
                 return {
@@ -96,7 +98,7 @@ class PlayerHandler {
 
     async getThumbnailSafely(track) {
         try {
-        
+
             if (track.info.thumbnail instanceof Promise) {
                 const thumbnail = await Promise.race([
                     track.info.thumbnail,
@@ -104,20 +106,20 @@ class PlayerHandler {
                 ]);
                 return typeof thumbnail === 'string' ? thumbnail : null;
             }
-            
-      
+
+
             if (typeof track.info.thumbnail === 'string' && track.info.thumbnail.trim() !== '') {
                 return track.info.thumbnail;
             }
-            
-      
+
+
             if (track.info.identifier && track.info.sourceName === 'youtube') {
                 return `https://img.youtube.com/vi/${track.info.identifier}/maxresdefault.jpg`;
             }
-            
+
             return null;
         } catch (error) {
-          
+
             if (track.info.identifier && track.info.sourceName === 'youtube') {
                 return `https://img.youtube.com/vi/${track.info.identifier}/maxresdefault.jpg`;
             }
@@ -128,12 +130,12 @@ class PlayerHandler {
     async getPlayerInfo(guildId) {
         try {
             const player = this.client.riffy.players.get(guildId);
-            
+
             if (!player || !player.current || !player.current.info) {
                 return null;
             }
 
-      
+
             const thumbnail = await this.getThumbnailSafely(player.current);
 
             return {
@@ -160,14 +162,14 @@ class PlayerHandler {
             try {
                 const trackTitle = track?.info?.title || 'Unknown Track';
                 console.log(`🎵 Started playing: ${trackTitle} in ${player.guildId}`);
-                
+
                 if (this.client.statusManager) {
                     await this.client.statusManager.onTrackStart(player.guildId);
                 }
-                
+
                 if (track && track.info) {
                     const thumbnail = await this.getThumbnailSafely(track);
-                    
+
                     await this.centralEmbed.updateCentralEmbed(player.guildId, {
                         title: track.info.title || 'Unknown Title',
                         author: track.info.author || 'Unknown Artist',
@@ -192,7 +194,7 @@ class PlayerHandler {
             try {
                 const trackTitle = track?.info?.title || 'Unknown Track';
                 console.log(`🎵 Finished playing: ${trackTitle} in ${player.guildId}`);
-                
+
                 if (this.client.statusManager) {
                     await this.client.statusManager.onTrackEnd(player.guildId);
                 }
@@ -204,15 +206,15 @@ class PlayerHandler {
         this.client.riffy.on('queueEnd', async (player) => {
             try {
                 console.log(`🎵 Queue ended in ${player.guildId}`);
-        
+
                 await this.centralEmbed.updateCentralEmbed(player.guildId, null);
-        
+
                 const serverConfig = await require('../models/Server').findById(player.guildId);
-        
+
                 if (serverConfig?.settings?.autoplay) {
                     player.isAutoplay = true;
                 }
-        
+
                 if (player.isAutoplay) {
                     player.autoplay(player);
                 } else {
@@ -242,11 +244,11 @@ class PlayerHandler {
         this.client.riffy.on('playerDisconnect', async (player) => {
             try {
                 console.log(`🎵 Player destroyed for guild ${player.guildId}`);
-                
+
                 if (this.client.statusManager) {
                     await this.client.statusManager.onPlayerDisconnect(player.guildId);
                 }
-                
+
                 await this.centralEmbed.updateCentralEmbed(player.guildId, null);
             } catch (error) {
                 console.error('Player disconnect error:', error.message);

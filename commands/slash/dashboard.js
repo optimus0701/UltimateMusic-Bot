@@ -18,8 +18,14 @@ module.exports = {
 
         if (redirectUri) {
             try {
+                // Ensure protocol is present
+                let urlString = redirectUri;
+                if (!urlString.startsWith('http://') && !urlString.startsWith('https://')) {
+                    urlString = `https://${urlString}`;
+                }
+
                 // Extract base URL from redirect URI (e.g., http://domain.com/auth/callback -> http://domain.com)
-                const url = new URL(redirectUri);
+                const url = new URL(urlString);
                 dashboardUrl = `${url.protocol}//${url.host}/dashboard`;
             } catch (e) {
                 console.error('Error parsing DISCORD_REDIRECT_URI:', e);

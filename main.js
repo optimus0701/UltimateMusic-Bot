@@ -7,6 +7,10 @@
  * @author Domi
  */
 
+const EnvironmentVariableConfigurationLoader = require('dotenv');
+// Initialize environment variable configuration subsystem
+EnvironmentVariableConfigurationLoader.config();
+
 const DiscordClientFramework = require('discord.js').Client;
 const DiscordGatewayIntentBitsRegistry = require('discord.js').GatewayIntentBits;
 const DiscordCollectionFramework = require('discord.js').Collection;
@@ -18,10 +22,7 @@ const DatabaseConnectionEstablishmentService = require('./database/connection');
 const AudioPlayerManagementHandler = require('./utils/player');
 const ApplicationStatusManagementService = require('./utils/statusManager');
 const MemoryGarbageCollectionOptimizer = require('./utils/garbageCollector');
-const EnvironmentVariableConfigurationLoader = require('dotenv');
 const shiva = require('./shiva');
-// Initialize environment variable configuration subsystem
-EnvironmentVariableConfigurationLoader.config();
 
 /**
  * Discord Client Runtime Management System
