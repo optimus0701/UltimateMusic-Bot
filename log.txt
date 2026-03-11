@@ -1,0 +1,319 @@
+=== Starting Lavalink Wed Mar  4 03:11:41 UTC 2026 ===
+Could not load Logmanager "org.apache.logging.log4j.jul.LogManager"
+java.lang.ClassNotFoundException: org.apache.logging.log4j.jul.LogManager
+	at java.base/java.net.URLClassLoader.findClass(Unknown Source)
+	at java.base/java.lang.ClassLoader.loadClass(Unknown Source)
+	at org.springframework.boot.loader.LaunchedURLClassLoader.loadClass(LaunchedURLClassLoader.java:149)
+	at java.base/java.lang.ClassLoader.loadClass(Unknown Source)
+	at java.logging/java.util.logging.LogManager$1.run(Unknown Source)
+	at java.logging/java.util.logging.LogManager$1.run(Unknown Source)
+	at java.base/java.security.AccessController.doPrivileged(Unknown Source)
+	at java.logging/java.util.logging.LogManager.<clinit>(Unknown Source)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.isJulUsingASingleConsoleHandlerAtMost(LogbackLoggingSystem.java:158)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.isBridgeJulIntoSlf4j(LogbackLoggingSystem.java:150)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.configureJdkLoggingBridgeHandler(LogbackLoggingSystem.java:139)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.beforeInitialize(LogbackLoggingSystem.java:133)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationStartingEvent(LoggingApplicationListener.java:238)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:220)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:138)
+	at org.springframework.boot.context.event.EventPublishingRunListener.multicastInitialEvent(EventPublishingRunListener.java:136)
+	at org.springframework.boot.context.event.EventPublishingRunListener.starting(EventPublishingRunListener.java:75)
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$starting$0(SpringApplicationRunListeners.java:54)
+	at java.base/java.lang.Iterable.forEach(Unknown Source)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118)
+	at org.springframework.boot.SpringApplicationRunListeners.starting(SpringApplicationRunListeners.java:54)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:327)
+	at lavalink.server.Launcher.launchPluginBootstrap(Launcher.kt:132)
+	at lavalink.server.Launcher.main(Launcher.kt:125)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:95)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65)
+2026-03-04T03:11:48.912Z  INFO 1 --- [Lavalink] [           main] lavalink.server.Launcher                 : Starting Launcher v4.1.2 using Java 21.0.10 with PID 1 (/app/Lavalink.jar started by root in /app)
+2026-03-04T03:11:48.919Z  INFO 1 --- [Lavalink] [           main] lavalink.server.Launcher                 : No active profile set, falling back to 1 default profile: "default"
+2026-03-04T03:11:52.807Z  INFO 1 --- [Lavalink] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=3d6bf653-92ea-3fde-943a-10b9f8cd696e
+2026-03-04T03:11:54.697Z  INFO 1 --- [Lavalink] [           main] l.server.bootstrap.PluginManager         : Found plugin 'lavasearch-plugin' version '1.0.0'
+2026-03-04T03:11:54.698Z  INFO 1 --- [Lavalink] [           main] l.server.bootstrap.PluginManager         : Found plugin 'lavasrc-plugin' version '4.8.1'
+2026-03-04T03:11:54.698Z  INFO 1 --- [Lavalink] [           main] l.server.bootstrap.PluginManager         : Found plugin 'youtube-plugin' version '1.18.0'
+2026-03-04T03:11:58.906Z  INFO 1 --- [Lavalink] [           main] l.server.bootstrap.PluginManager         : Loaded 'lavasearch-plugin-1.0.0.jar' (20 classes)
+2026-03-04T03:11:59.817Z  INFO 1 --- [Lavalink] [           main] l.server.bootstrap.PluginManager         : Loaded 'lavasrc-plugin-4.8.1.jar' (202 classes)
+2026-03-04T03:11:59.915Z  INFO 1 --- [Lavalink] [           main] l.server.bootstrap.PluginManager         : Loaded 'youtube-plugin-1.18.0.jar' (17 classes)
+2026-03-04T03:12:03.495Z  INFO 1 --- [Lavalink] [           main] lavalink.server.Launcher                 : Started Launcher in 18.696 seconds (process running for 22.484)
+2026-03-04T03:12:04.016Z  INFO 1 --- [Lavalink] [           main] lavalink.server.Launcher                 : 
+
+[32m       .  [31m _                  _ _       _    [32m__ _ _
+[32m      /\\ [31m| | __ ___   ____ _| (_)_ __ | | __[32m\ \ \ \
+[32m     ( ( )[31m| |/ _` \ \ / / _` | | | '_ \| |/ /[32m \ \ \ \
+[32m      \\/ [31m| | (_| |\ V / (_| | | | | | |   < [32m  ) ) ) )
+[32m       '  [31m|_|\__,_| \_/ \__,_|_|_|_| |_|_|\_\[32m / / / /
+[0m    =========================================[32m/_/_/_/[0m
+
+	Version:        4.1.2
+	Build time:     21.12.2025 19:58:06 UTC
+	Branch          HEAD
+	Commit:         48e0d2f
+	Commit time:    21.12.2025 19:55:48 UTC
+	JVM:            21.0.10
+	Lavaplayer      2.2.6
+
+2026-03-04T03:12:04.195Z  INFO 1 --- [Lavalink] [           main] lavalink.server.Launcher                 : No active profile set, falling back to 1 default profile: "default"
+2026-03-04T03:12:09.403Z  WARN 1 --- [Lavalink] [           main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2026-03-04T03:12:09.507Z  INFO 1 --- [Lavalink] [           main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2026-03-04T03:12:09.508Z  INFO 1 --- [Lavalink] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 5307 ms
+2026-03-04T03:12:10.322Z  INFO 1 --- [Lavalink] [           main] c.g.t.lavasrc.plugin.LavaSrcPlugin       : Loading LavaSrc plugin...
+2026-03-04T03:12:10.595Z  INFO 1 --- [Lavalink] [           main] c.g.t.lavasrc.plugin.LavaSrcPlugin       : Registering Youtube Source audio source manager...
+2026-03-04T03:12:10.599Z  INFO 1 --- [Lavalink] [           main] c.g.t.lavasrc.plugin.LavaSrcPlugin       : Registering Spotify search manager...
+2026-03-04T03:12:10.600Z  INFO 1 --- [Lavalink] [           main] c.g.t.lavasrc.plugin.LavaSrcPlugin       : Registering Youtube search manager...
+2026-03-04T03:12:12.106Z  INFO 1 --- [Lavalink] [           main] c.s.d.l.tools.GarbageCollectionMonitor   : GC monitoring enabled, reporting results every 2 minutes.
+2026-03-04T03:12:13.203Z  INFO 1 --- [Lavalink] [           main] c.g.t.lavasrc.plugin.LavaSrcPlugin       : Registering Spotify audio source manager...
+2026-03-04T03:12:13.307Z  WARN 1 --- [Lavalink] [           main] d.l.youtube.plugin.ClientProvider        : Failed to resolve TVHTML5EMBEDDED into a Client
+2026-03-04T03:12:13.308Z  INFO 1 --- [Lavalink] [           main] d.l.youtube.plugin.YoutubePluginLoader   : Using remote cipher server with URL "https://cipher.kikkia.dev/"
+2026-03-04T03:12:13.700Z  INFO 1 --- [Lavalink] [           main] d.l.youtube.http.YoutubeOauth2Handler    : YouTube access token refreshed successfully
+2026-03-04T03:12:13.701Z  INFO 1 --- [Lavalink] [           main] d.l.youtube.plugin.YoutubePluginLoader   : YouTube source initialised with clients: WEB_REMIX, WEB, TVHTML5, ANDROID_VR 
+2026-03-04T03:12:14.600Z  INFO 1 --- [Lavalink] [           main] l.server.config.KoeConfiguration         : OS: LINUX_MUSL, Arch: X86_64
+2026-03-04T03:12:14.600Z  INFO 1 --- [Lavalink] [           main] l.server.config.KoeConfiguration         : Enabling JDA-NAS
+2026-03-04T03:12:14.606Z  INFO 1 --- [Lavalink] [           main] c.s.l.c.natives.NativeLibraryLoader      : Native library udpqueue: loading with filter null
+2026-03-04T03:12:14.617Z ERROR 1 --- [Lavalink] [           main] c.s.l.c.natives.NativeLibraryLoader      : Native library udpqueue: loading failed.
+
+java.lang.UnsatisfiedLinkError: /tmp/lava-jni-natives/1772593934607/libudpqueue.so: Error loading shared library libgcc_s.so.1: No such file or directory (needed by /tmp/lava-jni-natives/1772593934607/libudpqueue.so)
+	at java.base/jdk.internal.loader.NativeLibraries.load(Native Method) ~[na:na]
+	at java.base/jdk.internal.loader.NativeLibraries$NativeLibraryImpl.open(Unknown Source) ~[na:na]
+	at java.base/jdk.internal.loader.NativeLibraries.loadLibrary(Unknown Source) ~[na:na]
+	at java.base/jdk.internal.loader.NativeLibraries.loadLibrary(Unknown Source) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadLibrary(Unknown Source) ~[na:na]
+	at java.base/java.lang.Runtime.load0(Unknown Source) ~[na:na]
+	at java.base/java.lang.System.load(Unknown Source) ~[na:na]
+	at com.sedmelluq.lava.common.natives.NativeLibraryLoader.loadFromFile(NativeLibraryLoader.java:115) ~[lava-common-2.2.6.jar!/:na]
+	at com.sedmelluq.lava.common.natives.NativeLibraryLoader.loadInternal(NativeLibraryLoader.java:107) ~[lava-common-2.2.6.jar!/:na]
+	at com.sedmelluq.lava.common.natives.NativeLibraryLoader.loadWithFailureCheck(NativeLibraryLoader.java:81) ~[lava-common-2.2.6.jar!/:na]
+	at com.sedmelluq.lava.common.natives.NativeLibraryLoader.load(NativeLibraryLoader.java:66) ~[lava-common-2.2.6.jar!/:na]
+	at com.sedmelluq.discord.lavaplayer.udpqueue.natives.UdpQueueManagerLibrary.getInstance(UdpQueueManagerLibrary.java:16) ~[udpqueue-api-0.2.9.jar!/:na]
+	at com.sedmelluq.discord.lavaplayer.udpqueue.natives.UdpQueueManager.<init>(UdpQueueManager.java:26) ~[udpqueue-api-0.2.9.jar!/:na]
+	at moe.kyokobot.koe.codec.udpqueue.QueueManagerPool.<init>(QueueManagerPool.java:27) ~[ext-udpqueue-2.2.0-rc2.jar!/:na]
+	at moe.kyokobot.koe.codec.udpqueue.UdpQueueFramePollerFactory.<init>(UdpQueueFramePollerFactory.java:21) ~[ext-udpqueue-2.2.0-rc2.jar!/:na]
+	at lavalink.server.config.KoeConfiguration.koeOptions(KoeConfiguration.kt:63) ~[classes!/:4.1.2]
+	at lavalink.server.config.KoeConfiguration$$SpringCGLIB$$0.CGLIB$koeOptions$1(<generated>) ~[classes!/:4.1.2]
+	at lavalink.server.config.KoeConfiguration$$SpringCGLIB$$FastClass$$1.invoke(<generated>) ~[classes!/:4.1.2]
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258) ~[spring-core-6.1.15.jar!/:6.1.15]
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:339) ~[spring-context-6.1.9.jar!/:6.1.9]
+	at lavalink.server.config.KoeConfiguration$$SpringCGLIB$$0.koeOptions(<generated>) ~[classes!/:4.1.2]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:146) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:644) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:485) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1212) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1212) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:962) ~[spring-context-6.1.9.jar!/:6.1.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624) ~[spring-context-6.1.9.jar!/:6.1.9]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.3.0.jar!/:3.3.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.3.0.jar!/:3.3.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.0.jar!/:3.3.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.0.jar!/:3.3.0]
+	at org.springframework.boot.builder.SpringApplicationBuilder.run(SpringApplicationBuilder.java:149) ~[spring-boot-3.3.0.jar!/:3.3.0]
+	at lavalink.server.Launcher.launchMain(Launcher.kt:164) ~[classes!/:4.1.2]
+	at lavalink.server.Launcher.main(Launcher.kt:126) ~[classes!/:4.1.2]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source) ~[na:na]
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49) ~[Lavalink.jar:4.1.2]
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:95) ~[Lavalink.jar:4.1.2]
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:58) ~[Lavalink.jar:4.1.2]
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65) ~[Lavalink.jar:4.1.2]
+
+2026-03-04T03:12:14.707Z  WARN 1 --- [Lavalink] [           main] l.server.config.KoeConfiguration         : Failed to enable JDA-NAS! GC pauses may cause your bot to stutter during playback.
+
+java.lang.RuntimeException: java.lang.UnsatisfiedLinkError: /tmp/lava-jni-natives/1772593934607/libudpqueue.so: Error loading shared library libgcc_s.so.1: No such file or directory (needed by /tmp/lava-jni-natives/1772593934607/libudpqueue.so)
+	at com.sedmelluq.lava.common.natives.NativeLibraryLoader.loadWithFailureCheck(NativeLibraryLoader.java:85) ~[lava-common-2.2.6.jar!/:na]
+	at com.sedmelluq.lava.common.natives.NativeLibraryLoader.load(NativeLibraryLoader.java:66) ~[lava-common-2.2.6.jar!/:na]
+	at com.sedmelluq.discord.lavaplayer.udpqueue.natives.UdpQueueManagerLibrary.getInstance(UdpQueueManagerLibrary.java:16) ~[udpqueue-api-0.2.9.jar!/:na]
+	at com.sedmelluq.discord.lavaplayer.udpqueue.natives.UdpQueueManager.<init>(UdpQueueManager.java:26) ~[udpqueue-api-0.2.9.jar!/:na]
+	at moe.kyokobot.koe.codec.udpqueue.QueueManagerPool.<init>(QueueManagerPool.java:27) ~[ext-udpqueue-2.2.0-rc2.jar!/:na]
+	at moe.kyokobot.koe.codec.udpqueue.UdpQueueFramePollerFactory.<init>(UdpQueueFramePollerFactory.java:21) ~[ext-udpqueue-2.2.0-rc2.jar!/:na]
+	at lavalink.server.config.KoeConfiguration.koeOptions(KoeConfiguration.kt:63) ~[classes!/:4.1.2]
+	at lavalink.server.config.KoeConfiguration$$SpringCGLIB$$0.CGLIB$koeOptions$1(<generated>) ~[classes!/:4.1.2]
+	at lavalink.server.config.KoeConfiguration$$SpringCGLIB$$FastClass$$1.invoke(<generated>) ~[classes!/:4.1.2]
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258) ~[spring-core-6.1.15.jar!/:6.1.15]
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:339) ~[spring-context-6.1.9.jar!/:6.1.9]
+	at lavalink.server.config.KoeConfiguration$$SpringCGLIB$$0.koeOptions(<generated>) ~[classes!/:4.1.2]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:146) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:644) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:485) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1212) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1212) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.15.jar!/:6.1.15]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:962) ~[spring-context-6.1.9.jar!/:6.1.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624) ~[spring-context-6.1.9.jar!/:6.1.9]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.3.0.jar!/:3.3.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.3.0.jar!/:3.3.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.0.jar!/:3.3.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.0.jar!/:3.3.0]
+	at org.springframework.boot.builder.SpringApplicationBuilder.run(SpringApplicationBuilder.java:149) ~[spring-boot-3.3.0.jar!/:3.3.0]
+	at lavalink.server.Launcher.launchMain(Launcher.kt:164) ~[classes!/:4.1.2]
+	at lavalink.server.Launcher.main(Launcher.kt:126) ~[classes!/:4.1.2]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source) ~[na:na]
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49) ~[Lavalink.jar:4.1.2]
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:95) ~[Lavalink.jar:4.1.2]
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:58) ~[Lavalink.jar:4.1.2]
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65) ~[Lavalink.jar:4.1.2]
+Caused by: java.lang.UnsatisfiedLinkError: /tmp/lava-jni-natives/1772593934607/libudpqueue.so: Error loading shared library libgcc_s.so.1: No such file or directory (needed by /tmp/lava-jni-natives/1772593934607/libudpqueue.so)
+	at java.base/jdk.internal.loader.NativeLibraries.load(Native Method) ~[na:na]
+	at java.base/jdk.internal.loader.NativeLibraries$NativeLibraryImpl.open(Unknown Source) ~[na:na]
+	at java.base/jdk.internal.loader.NativeLibraries.loadLibrary(Unknown Source) ~[na:na]
+	at java.base/jdk.internal.loader.NativeLibraries.loadLibrary(Unknown Source) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadLibrary(Unknown Source) ~[na:na]
+	at java.base/java.lang.Runtime.load0(Unknown Source) ~[na:na]
+	at java.base/java.lang.System.load(Unknown Source) ~[na:na]
+	at com.sedmelluq.lava.common.natives.NativeLibraryLoader.loadFromFile(NativeLibraryLoader.java:115) ~[lava-common-2.2.6.jar!/:na]
+	at com.sedmelluq.lava.common.natives.NativeLibraryLoader.loadInternal(NativeLibraryLoader.java:107) ~[lava-common-2.2.6.jar!/:na]
+	at com.sedmelluq.lava.common.natives.NativeLibraryLoader.loadWithFailureCheck(NativeLibraryLoader.java:81) ~[lava-common-2.2.6.jar!/:na]
+	... 68 common frames omitted
+
+2026-03-04T03:12:15.104Z  WARN 1 --- [Lavalink] [           main] l.server.config.SentryConfiguration      : Turning off sentry
+2026-03-04T03:12:15.413Z  WARN 1 --- [Lavalink] [      Finalizer] c.s.l.c.natives.NativeResourceHolder     : Should have been closed before finalization (com.sedmelluq.discord.lavaplayer.udpqueue.natives.UdpQueueManager).
+2026-03-04T03:12:17.195Z  INFO 1 --- [Lavalink] [           main] io.undertow                              : starting server: Undertow - 2.3.13.Final
+2026-03-04T03:12:17.207Z  INFO 1 --- [Lavalink] [           main] org.xnio                                 : XNIO version 3.8.8.Final
+2026-03-04T03:12:17.298Z  INFO 1 --- [Lavalink] [           main] org.xnio.nio                             : XNIO NIO Implementation Version 3.8.8.Final
+2026-03-04T03:12:17.897Z  INFO 1 --- [Lavalink] [           main] org.jboss.threads                        : JBoss Threads version 3.5.0.Final
+2026-03-04T03:12:18.215Z  INFO 1 --- [Lavalink] [           main] o.s.b.w.e.undertow.UndertowWebServer     : Undertow started on port 2333 (http) with context path '/'
+2026-03-04T03:12:18.299Z  INFO 1 --- [Lavalink] [           main] lavalink.server.Launcher                 : Started Launcher in 14.792 seconds (process running for 37.288)
+2026-03-04T03:12:18.301Z  INFO 1 --- [Lavalink] [           main] lavalink.server.Launcher                 : Lavalink is ready to accept connections.
+2026-03-04T03:12:19.199Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-04T03:12:19.199Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-03-04T03:12:19.201Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-03-04T03:12:19.305Z  WARN 1 --- [Lavalink] [  XNIO-1 task-2] l.s.config.RequestAuthorizationFilter    : Authorization missing for 47.79.227.30 on GET /
+2026-03-04T03:12:19.306Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : GET /, client=47.79.227.30
+2026-03-04T03:14:04.114Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /171.237.21.183:0
+2026-03-04T03:14:04.495Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : GET /v4/websocket, client=171.237.21.183
+2026-03-04T03:14:04.800Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] lavalink.server.io.SocketServer          : Connection successfully established from Riffy/1.0.12
+2026-03-04T03:14:05.107Z  WARN 1 --- [Lavalink] [pool-2-thread-1] o.s.os.linux.LinuxOperatingSystem        : Did not find udev library in operating system. Some features may not work.
+2026-03-04T03:14:05.707Z  INFO 1 --- [Lavalink] [  XNIO-1 task-3] l.server.io.RequestLoggingFilter         : GET /v4/info, client=171.237.21.183
+2026-03-04T03:14:05.800Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : PATCH /v4/sessions/vnhf1mvst5c87ekk, client=171.237.21.183, payload={"resuming":true,"timeout":60}
+2026-03-04T03:14:12.107Z  WARN 1 --- [Lavalink] [ager-3-thread-1] c.s.d.l.tools.GarbageCollectionMonitor   : Suspicious GC results for the last 2 minutes: [Bucket 0 = 4] [Bucket 20 = 0] [Bucket 50 = 3] [Bucket 200 = 1] [Bucket 500 = 0] [Bucket 2000 = 0] 
+2026-03-04T03:16:39.189Z  INFO 1 --- [Lavalink] [   XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /171.237.21.183:0 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with id vnhf1mvst5c87ekk
+2026-03-04T03:16:51.008Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /171.237.21.183:0
+2026-03-04T03:16:51.010Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : GET /v4/websocket, client=171.237.21.183
+2026-03-04T03:16:51.012Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] lavalink.server.io.SocketServer          : Connection successfully established from Riffy/1.0.12
+2026-03-04T03:16:51.211Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : GET /v4/info, client=171.237.21.183
+2026-03-04T03:16:51.217Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : PATCH /v4/sessions/th48gq9yzcdfgxqx, client=171.237.21.183, payload={"resuming":true,"timeout":60}
+2026-03-04T03:17:13.931Z  INFO 1 --- [Lavalink] [   XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /171.237.21.183:0 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with id th48gq9yzcdfgxqx
+2026-03-04T03:17:39.186Z  INFO 1 --- [Lavalink] [pool-2-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2026-03-04T03:18:13.934Z  INFO 1 --- [Lavalink] [pool-3-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2026-03-04T03:25:50.144Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /171.237.21.183:0
+2026-03-04T03:25:50.145Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : GET /v4/websocket, client=171.237.21.183
+2026-03-04T03:25:50.147Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] lavalink.server.io.SocketServer          : Connection successfully established from Riffy/1.0.12
+2026-03-04T03:25:50.334Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : GET /v4/info, client=171.237.21.183
+2026-03-04T03:25:50.350Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : PATCH /v4/sessions/mphw7zouty18c15b, client=171.237.21.183, payload={"resuming":true,"timeout":60}
+2026-03-04T03:28:19.980Z  INFO 1 --- [Lavalink] [   XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /171.237.21.183:0 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with id mphw7zouty18c15b
+2026-03-04T03:28:31.559Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /171.237.21.183:0
+2026-03-04T03:28:31.560Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : GET /v4/websocket, client=171.237.21.183
+2026-03-04T03:28:31.562Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] lavalink.server.io.SocketServer          : Connection successfully established from Riffy/1.0.12
+2026-03-04T03:28:31.746Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : PATCH /v4/sessions/lmq0rs09hjehjagn, client=171.237.21.183, payload={"resuming":true,"timeout":60}
+2026-03-04T03:28:31.750Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : GET /v4/info, client=171.237.21.183
+2026-03-04T03:29:09.825Z  INFO 1 --- [Lavalink] [   XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /171.237.21.183:0 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with id lmq0rs09hjehjagn
+2026-03-04T03:29:19.980Z  INFO 1 --- [Lavalink] [pool-4-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2026-03-04T03:30:09.825Z  INFO 1 --- [Lavalink] [pool-5-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2026-03-04T03:31:02.044Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /171.237.21.183:0
+2026-03-04T03:31:02.046Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : GET /v4/websocket, client=171.237.21.183
+2026-03-04T03:31:02.048Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] lavalink.server.io.SocketServer          : Connection successfully established from Riffy/1.0.12
+2026-03-04T03:31:02.509Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : PATCH /v4/sessions/apz6qiumz36vi7sb, client=171.237.21.183, payload={"resuming":true,"timeout":60}
+2026-03-04T03:31:02.515Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : GET /v4/info, client=171.237.21.183
+2026-03-04T03:31:39.160Z  INFO 1 --- [Lavalink] [   XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /171.237.21.183:0 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with id apz6qiumz36vi7sb
+2026-03-04T03:32:39.160Z  INFO 1 --- [Lavalink] [pool-6-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2026-03-04T03:33:13.311Z  WARN 1 --- [Lavalink] [  XNIO-1 task-2] l.s.config.RequestAuthorizationFilter    : Authorization missing for 47.79.227.30 on GET /
+2026-03-04T03:33:13.312Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : GET /, client=47.79.227.30
+2026-03-04T03:33:38.933Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /171.237.21.183:0
+2026-03-04T03:33:38.934Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : GET /v4/websocket, client=171.237.21.183
+2026-03-04T03:33:38.944Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] lavalink.server.io.SocketServer          : Connection successfully established from Riffy/1.0.12
+2026-03-04T03:33:39.677Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : GET /v4/info, client=171.237.21.183
+2026-03-04T03:33:39.942Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : PATCH /v4/sessions/7e587ta44h71x9r9, client=171.237.21.183, payload={"resuming":true,"timeout":60}
+2026-03-04T03:33:56.262Z  INFO 1 --- [Lavalink] [   XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /171.237.21.183:0 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with id 7e587ta44h71x9r9
+2026-03-04T03:34:56.262Z  INFO 1 --- [Lavalink] [pool-7-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2026-03-04T03:35:02.720Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /171.237.21.183:0
+2026-03-04T03:35:02.721Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : GET /v4/websocket, client=171.237.21.183
+2026-03-04T03:35:02.723Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] lavalink.server.io.SocketServer          : Connection successfully established from Riffy/1.0.12
+2026-03-04T03:35:03.178Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : GET /v4/info, client=171.237.21.183
+2026-03-04T03:35:03.190Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : PATCH /v4/sessions/49nlo34cyr00nt2e, client=171.237.21.183, payload={"resuming":true,"timeout":60}
+2026-03-04T03:35:06.129Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "spsearch:bạc phận"
+2026-03-04T03:35:07.022Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.player.AudioLoaderRestHandler   : Loaded playlist Spotify Search: bạc phận
+2026-03-04T03:35:07.200Z  INFO 1 --- [Lavalink] [  XNIO-1 task-2] l.server.io.RequestLoggingFilter         : GET /v4/loadtracks?identifier=spsearch%3Ab%E1%BA%A1c%20ph%E1%BA%ADn, client=171.237.21.183
+2026-03-04T03:35:08.495Z  INFO 1 --- [Lavalink] [  XNIO-1 task-3] l.server.io.RequestLoggingFilter         : PATCH /v4/sessions/49nlo34cyr00nt2e/players/794902236245000212?noReplace=false, client=171.237.21.183, payload={"voice":{"sessionId":"1112dde67b7649c9f870c72cef450cf3","endpoint":"c-hkg09-79f04daf.discord.media:8443","token":"d6c872ccd59e2efa","channelId":"992252948740583464"},"volume":100}
+2026-03-04T03:35:18.585Z  INFO 1 --- [Lavalink] [   XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /171.237.21.183:0 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with id 49nlo34cyr00nt2e
+2026-03-04T03:35:21.804Z  WARN 1 --- [Lavalink] [  XNIO-1 task-3] l.s.config.RequestAuthorizationFilter    : Authorization missing for 47.79.227.30 on GET /
+2026-03-04T03:35:21.804Z  INFO 1 --- [Lavalink] [  XNIO-1 task-3] l.server.io.RequestLoggingFilter         : GET /, client=47.79.227.30

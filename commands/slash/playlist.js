@@ -288,8 +288,7 @@ module.exports = {
         }
 
         // Create player
-        const PlayerHandler = require('../../utils/player');
-        const playerHandler = new PlayerHandler(client);
+        const playerHandler = client.playerHandler;
         const player = await playerHandler.createPlayer(
             interaction.guild.id,
             interaction.member.voice.channelId,
@@ -300,7 +299,15 @@ module.exports = {
         let addedCount = 0;
         for (const song of playlist.songs) {
             try {
-                const result = await client.riffy.resolve({ query: song.url });
+                // Try resolving by URL first, then fall back to title search
+                let result = await client.riffy.resolve({ query: song.url }).catch(() => null);
+
+                if (!result || !result.tracks || result.tracks.length === 0) {
+                    // Fallback: search by title + author
+                    const searchQuery = `${song.title} ${song.author || ''}`.trim();
+                    result = await client.riffy.resolve({ query: searchQuery }).catch(() => null);
+                }
+
                 if (result && result.tracks && result.tracks.length > 0) {
                     const track = result.tracks[0];
                     track.info.requester = interaction.user;

@@ -5,26 +5,42 @@ class StatusManager {
         this.client = client;
         this.currentInterval = null;
         this.isPlaying = false;
-        this.voiceChannelData = new Map(); 
+        this.voiceChannelData = new Map();
+    }
+
+    _getTimestamp() {
+        return new Date().toISOString().replace('T', ' ').slice(0, 19);
+    }
+
+    _log(msg) {
+        console.log(`[${this._getTimestamp()}] ${msg}`);
+    }
+
+    _error(msg, error) {
+        console.error(`[${this._getTimestamp()}] ${msg}`, error || '');
     }
 
 
-    async updateStatusAndVoice(guildId) {
+    async updateStatusAndVoice(guildId, track = null) {
         try {
-    
+            // Use track info directly if provided to avoid library state lag (player.playing might be false at start)
+            if (track && track.info) {
+                await this.setPlayingStatus(track.info.title);
+                await this.setVoiceChannelStatus(guildId, track.info.title);
+                return;
+            }
+
             const playerInfo = this.client.playerHandler.getPlayerInfo(guildId);
-            
+
             if (playerInfo && playerInfo.playing) {
-         
                 await this.setPlayingStatus(playerInfo.title);
                 await this.setVoiceChannelStatus(guildId, playerInfo.title);
             } else {
-           
                 await this.setDefaultStatus();
                 await this.clearVoiceChannelStatus(guildId);
             }
         } catch (error) {
-            console.error('❌ Error updating status and voice channel:', error);
+            this._error('❌ Error updating status and voice channel:', error);
         }
     }
 
@@ -32,9 +48,9 @@ class StatusManager {
     async setPlayingStatus(trackTitle) {
         this.stopCurrentStatus();
         this.isPlaying = true;
-        
+
         const activity = `🎵 ${trackTitle}`;
-     
+
         await this.client.user.setPresence({
             activities: [{
                 name: activity,
@@ -42,8 +58,8 @@ class StatusManager {
             }],
             status: 'online'
         });
-        
-    
+
+
         this.currentInterval = setInterval(async () => {
             if (this.isPlaying) {
                 await this.client.user.setPresence({
@@ -53,11 +69,11 @@ class StatusManager {
                     }],
                     status: 'online'
                 });
-                console.log(`🔄 Status refreshed: ${activity}`);
+                this._log(`🔄 Status refreshed: ${activity}`);
             }
         }, 30000);
-        
-        console.log(`✅ Status locked to: ${activity}`);
+
+        this._log(`✅ Status locked to: ${activity}`);
     }
 
 
@@ -72,7 +88,7 @@ class StatusManager {
             const voiceChannel = guild.channels.cache.get(player.voiceChannel);
             if (!voiceChannel) return;
 
-        
+
             if (!this.voiceChannelData.has(voiceChannel.id)) {
                 this.voiceChannelData.set(voiceChannel.id, {
                     originalName: voiceChannel.name,
@@ -80,10 +96,10 @@ class StatusManager {
                 });
             }
 
-    
+
             const botMember = guild.members.me;
             const permissions = voiceChannel.permissionsFor(botMember);
-            
+
             if (!permissions?.has('ManageChannels')) {
                 console.warn(`⚠️ Bot lacks 'Manage Channels' permission in ${voiceChannel.name}`);
                 return;
@@ -91,7 +107,7 @@ class StatusManager {
 
             const statusText = `🎵 ${trackTitle}`;
 
-        
+
             let success = await this.createVoiceStatusAPI(voiceChannel.id, statusText);
             if (success) return;
 
@@ -101,7 +117,7 @@ class StatusManager {
             await this.createChannelName(voiceChannel, trackTitle);
 
         } catch (error) {
-            console.error(`❌ Voice channel status creation failed: ${error.message}`);
+            this._error(`❌ Voice channel status creation failed: ${error.message}`);
         }
     }
 
@@ -111,22 +127,22 @@ class StatusManager {
             const guild = this.client.guilds.cache.get(guildId);
             if (!guild) return;
 
-       
+
             const botMember = guild.members.me;
             let voiceChannel = null;
 
-    
+
             const player = this.client.riffy.players.get(guildId);
             if (player && player.voiceChannel) {
                 voiceChannel = guild.channels.cache.get(player.voiceChannel);
             }
 
-   
+
             if (!voiceChannel && botMember.voice.channelId) {
                 voiceChannel = guild.channels.cache.get(botMember.voice.channelId);
             }
 
- 
+
             if (!voiceChannel) {
                 for (const channel of guild.channels.cache.values()) {
                     if (channel.type === 2 && this.voiceChannelData.has(channel.id)) { // Voice channel
@@ -138,14 +154,14 @@ class StatusManager {
 
             if (!voiceChannel) return;
 
-    
+
             const permissions = voiceChannel.permissionsFor(botMember);
             if (!permissions?.has('ManageChannels')) {
                 console.warn(`⚠️ Bot lacks 'Manage Channels' permission in ${voiceChannel.name}`);
                 return;
             }
 
-        
+
             let success = await this.deleteVoiceStatusAPI(voiceChannel.id);
             if (success) return;
 
@@ -155,20 +171,20 @@ class StatusManager {
             await this.deleteChannelName(voiceChannel);
 
         } catch (error) {
-            console.error(`❌ Voice channel status clearing failed: ${error.message}`);
+            this._error(`❌ Voice channel status clearing failed: ${error.message}`);
         }
     }
 
-   
+
     async createVoiceStatusAPI(channelId, statusText) {
         try {
             await this.client.rest.put(`/channels/${channelId}/voice-status`, {
                 body: { status: statusText }
             });
-            console.log(`✅ Voice status created: ${statusText}`);
+            this._log(`✅ Voice status created: ${statusText}`);
             return true;
         } catch (error) {
-            console.log(`ℹ️ Voice status API not available for creation`);
+            // Quiet log for API unavailability
             return false;
         }
     }
@@ -176,20 +192,19 @@ class StatusManager {
 
     async deleteVoiceStatusAPI(channelId) {
         try {
-            
+
             await this.client.rest.put(`/channels/${channelId}/voice-status`, {
                 body: { status: null }
             });
-            console.log(`✅ Voice status cleared`);
+            this._log(`✅ Voice status cleared`);
             return true;
         } catch (error) {
             try {
-             
+
                 await this.client.rest.delete(`/channels/${channelId}/voice-status`);
-                console.log(`✅ Voice status deleted`);
+                this._log(`✅ Voice status deleted`);
                 return true;
             } catch (deleteError) {
-                console.log(`ℹ️ Voice status API not available for deletion`);
                 return false;
             }
         }
@@ -200,10 +215,9 @@ class StatusManager {
         try {
             const topicText = `🎵 Now Playing: ${trackTitle}`;
             await voiceChannel.setTopic(topicText);
-            console.log(`✅ Voice channel topic created: ${topicText}`);
+            this._log(`✅ Voice channel topic created: ${topicText}`);
             return true;
         } catch (error) {
-            console.log(`ℹ️ Channel topic creation failed: ${error.message}`);
             return false;
         }
     }
@@ -213,12 +227,11 @@ class StatusManager {
         try {
             const originalData = this.voiceChannelData.get(voiceChannel.id);
             const originalTopic = originalData?.originalTopic || null;
-            
+
             await voiceChannel.setTopic(originalTopic);
-            console.log(`✅ Voice channel topic restored`);
+            this._log(`✅ Voice channel topic restored`);
             return true;
         } catch (error) {
-            console.log(`ℹ️ Channel topic restoration failed: ${error.message}`);
             return false;
         }
     }
@@ -228,39 +241,37 @@ class StatusManager {
         try {
             const originalData = this.voiceChannelData.get(voiceChannel.id);
             const baseName = originalData?.originalName || voiceChannel.name.replace(/🎵.*$/, '').trim();
-            
-            const shortTitle = trackTitle.length > 15 
-                ? trackTitle.substring(0, 15) + '...' 
+
+            const shortTitle = trackTitle.length > 15
+                ? trackTitle.substring(0, 15) + '...'
                 : trackTitle;
             const newName = `🎵 ${baseName}`;
 
             if (newName !== voiceChannel.name && newName.length <= 100) {
                 await voiceChannel.setName(newName);
-                console.log(`✅ Voice channel name created: ${newName}`);
+                this._log(`✅ Voice channel name created: ${newName}`);
             }
             return true;
         } catch (error) {
-            console.warn(`⚠️ Channel name creation failed: ${error.message}`);
             return false;
         }
     }
 
-   
+
     async deleteChannelName(voiceChannel) {
         try {
             const originalData = this.voiceChannelData.get(voiceChannel.id);
             const originalName = originalData?.originalName;
-            
+
             if (originalName && originalName !== voiceChannel.name) {
                 await voiceChannel.setName(originalName);
-                console.log(`✅ Voice channel name restored: ${originalName}`);
-                
-         
+                this._log(`✅ Voice channel name restored: ${originalName}`);
+
+
                 this.voiceChannelData.delete(voiceChannel.id);
             }
             return true;
         } catch (error) {
-            console.warn(`⚠️ Channel name restoration failed: ${error.message}`);
             return false;
         }
     }
@@ -269,9 +280,9 @@ class StatusManager {
     async setDefaultStatus() {
         this.stopCurrentStatus();
         this.isPlaying = false;
-        
+
         const defaultActivity = `🎵 Ready for music!`;
-        
+
         await this.client.user.setPresence({
             activities: [{
                 name: defaultActivity,
@@ -279,11 +290,11 @@ class StatusManager {
             }],
             status: 'online'
         });
-        
-        console.log(`✅ Status reset to: ${defaultActivity}`);
+
+        this._log(`✅ Status reset to: ${defaultActivity}`);
     }
 
-  
+
     stopCurrentStatus() {
         if (this.currentInterval) {
             clearInterval(this.currentInterval);
@@ -291,7 +302,7 @@ class StatusManager {
         }
     }
 
- 
+
     async setServerCountStatus(serverCount) {
         if (!this.isPlaying) {
             await this.client.user.setPresence({
@@ -306,11 +317,11 @@ class StatusManager {
     }
 
 
-    async onTrackStart(guildId) {
-        await this.updateStatusAndVoice(guildId);
+    async onTrackStart(guildId, track = null) {
+        await this.updateStatusAndVoice(guildId, track);
     }
 
- 
+
     async onTrackEnd(guildId) {
         setTimeout(async () => {
             await this.updateStatusAndVoice(guildId);
@@ -320,12 +331,12 @@ class StatusManager {
 
     async onPlayerDisconnect(guildId = null) {
         await this.setDefaultStatus();
-        
+
         if (guildId) {
-       
+
             await this.clearVoiceChannelStatus(guildId);
         } else {
-     
+
             for (const guild of this.client.guilds.cache.values()) {
                 await this.clearVoiceChannelStatus(guild.id);
             }
@@ -334,33 +345,33 @@ class StatusManager {
 
 
     async testVoiceChannelCRUD(guildId, testText = 'Test Song') {
-        console.log(`🧪 Testing Voice Channel CRUD for guild ${guildId}`);
-        
+        this._log(`🧪 Testing Voice Channel CRUD for guild ${guildId}`);
+
         const results = [];
-        
-   
+
+
         await this.setVoiceChannelStatus(guildId, testText);
-        results.push('✅ CREATE: Status set');
-        
-        await new Promise(resolve => setTimeout(resolve, 3000)); 
-        
-     
+        results.push(`[${this._getTimestamp()}] ✅ CREATE: Status set`);
+
+        await new Promise(resolve => setTimeout(resolve, 3000));
+
+
         const player = this.client.riffy.players.get(guildId);
         if (player?.voiceChannel) {
             const guild = this.client.guilds.cache.get(guildId);
             const voiceChannel = guild?.channels.cache.get(player.voiceChannel);
             if (voiceChannel) {
-                results.push(`📖 READ: Channel name: ${voiceChannel.name}`);
-                results.push(`📖 READ: Channel topic: ${voiceChannel.topic || 'None'}`);
+                results.push(`[${this._getTimestamp()}] 📖 READ: Channel name: ${voiceChannel.name}`);
+                results.push(`[${this._getTimestamp()}] 📖 READ: Channel topic: ${voiceChannel.topic || 'None'}`);
             }
         }
-        
-        await new Promise(resolve => setTimeout(resolve, 2000)); 
-        
-  
+
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+
         await this.clearVoiceChannelStatus(guildId);
-        results.push('🗑️ DELETE: Status cleared');
-        
+        results.push(`[${this._getTimestamp()}] 🗑️ DELETE: Status cleared`);
+
         return results.join('\n');
     }
 }

@@ -1,0 +1,23 @@
+[
+    {
+        "name": "GlaceYT",
+        "host": "45.13.236.245",
+        "port": 25582,
+        "password": "glace",
+        "secure": false
+    },
+    {
+        "name": "Serenetia Public",
+        "host": "lavalinkv4.serenetia.com",
+        "port": 443,
+        "password": "https://dsc.gg/ajidevserver",
+        "secure": true
+    },
+    {
+        "name": "Wispbyte",
+        "host": "217.154.212.188",
+        "port": 12587,
+        "password": "glace",
+        "secure": false
+    }
+]

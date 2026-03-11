@@ -4,6 +4,10 @@ const shiva = require('../shiva');
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction, client) {
+        const ts = new Date().toISOString().replace('T', ' ').slice(0, 19);
+        console.log(`[${ts}] 📥 Interaction Received: ${interaction.id} | Command: ${interaction.commandName || 'N/A'} | Type: ${interaction.type}`);
+        console.log(`      State — replied: ${interaction.replied}, deferred: ${interaction.deferred}`);
+
         if (interaction.isChatInputCommand()) {
             const command = client.slashCommands.get(interaction.commandName);
 

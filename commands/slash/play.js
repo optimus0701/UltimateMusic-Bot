@@ -19,25 +19,31 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setDescription('❌ System core offline - Command unavailable')
                 .setColor('#FF0000');
-            return interaction.reply({ embeds: [embed], ephemeral: true }).catch(() => {});
+            return interaction.reply({ embeds: [embed], ephemeral: true }).catch(() => { });
         }
 
         interaction.shivaValidated = true;
         interaction.securityToken = COMMAND_SECURITY_TOKEN;
 
-        await interaction.deferReply();
+        try {
+            console.log(`🔍 [play] deferReply — replied: ${interaction.replied}, deferred: ${interaction.deferred}`);
+            await interaction.deferReply();
+        } catch (deferError) {
+            console.warn(`⚠️ Failed to defer interaction: code=${deferError.code}, msg=${deferError.message}`);
+            console.warn(`   State — replied: ${interaction.replied}, deferred: ${interaction.deferred}`);
+            return;
+        }
 
         const ConditionChecker = require('../../utils/checks');
-        const PlayerHandler = require('../../utils/player');
         const ErrorHandler = require('../../utils/errorHandler');
-        
+
         const query = interaction.options.getString('query');
 
         try {
             const checker = new ConditionChecker(client);
             const conditions = await checker.checkMusicConditions(
-                interaction.guild.id, 
-                interaction.user.id, 
+                interaction.guild.id,
+                interaction.user.id,
                 interaction.member.voice?.channelId
             );
 
@@ -47,7 +53,7 @@ module.exports = {
                 return interaction.editReply({ embeds: [embed] });
             }
 
-            const playerHandler = new PlayerHandler(client);
+            const playerHandler = client.playerHandler;
             const player = await playerHandler.createPlayer(
                 interaction.guild.id,
                 interaction.member.voice.channelId,

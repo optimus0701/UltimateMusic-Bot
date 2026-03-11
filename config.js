@@ -27,14 +27,9 @@ class EnterpriseConfigurationManager {
 
             /**
              * 🎵 LAVALINK AUDIO SERVER CONFIGURATION
-             * Configure your Lavalink server for audio processing
+             * URL trả về danh sách Lavalink nodes (JSON format)
              */
-            lavalink: {
-                host: EnvironmentVariableProcessor.LAVALINK_HOST || "de-01.strixnodes.com",
-                port: EnvironmentVariableProcessor.LAVALINK_PORT || 2010,
-                password: EnvironmentVariableProcessor.LAVALINK_PASSWORD || "glace",
-                secure: EnvironmentVariableProcessor.LAVALINK_SECURE === 'true' || false
-            },
+            lavalinkNodesUrl: EnvironmentVariableProcessor.LAVALINK_NODES_URL || "",
             /**
              * 🤖 BOT BEHAVIOR CONFIGURATION
              * Customize your bot's appearance and basic behavior
